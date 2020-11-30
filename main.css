@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&family=Ubuntu:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+:root {
+    /* Colors */
+    --oxford-blue: #031d44ff;
+    --indigo-dye: #04395eff;
+    --polished-pine: #70a288ff;
+    --burlywood: #dab785ff;
+    --copper-crayola: #d5896fff;
+
+    --bg: #f2f2f2;
+    --fg: #fff;
+    --text: #262626;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+    color: var(--text);
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg);
+}
+
+footer, header {
+    background-color: var(--fg);
+    padding: 12px;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header a.company {
+    text-decoration: none;
+}
+
+header .placeholder {
+    flex-grow: 1;
+}
+
+header h1 {
+    font-size: 36px;
+}
+
+header p, header input, header a.button {
+    font-size: 16px;
+}
+
+header input {
+    padding: 10px;
+    color: var(--text);
+    border: 1px solid var(--bg);
+    border-radius: 4px;
+    outline: var(--indigo-dye);
+}
+
+.pollx {
+    font-family: 'Roboto Slab', serif;
+}
+
+hr {
+    border: 1.5px solid var(--fg);
+    margin: 20px 0;
+}
+
+a.button, button {
+    text-decoration: none;
+    padding: 10px;
+    color: var(--fg);
+    background-color: var(--indigo-dye);
+    border: 1px solid var(--indigo-dye);
+    border-radius: 4px;
+}
+
+main {
+    margin-top: 87px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}
+
+main .content {
+    max-width: 700px;
+    min-width: 75%;
+    text-align: center;
+}
+
+main .content div {
+    margin-bottom: 20px;
+}
+
+main .content div a.button {
+    margin: 20px;
+    display: inline-block;
+}
+
+.content h1.pollx {
+    font-size: 60px;
+}
+
+.polls-preview {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.poll-card {
+    background-color: var(--fg);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.poll-car-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+@media only screen and (max-width: 600px) {
+    header input {
+        display: none;
+    }
+
+    .polls-preview {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+}
