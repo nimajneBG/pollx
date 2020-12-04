@@ -13,6 +13,18 @@ class Poll {
 }
 
 
+class chart {
+    constructor(data) {
+        this.data = data
+        this.el_bar = document.getElementById('bar-chart')
+    }
+
+    async drawLineDiagramm() {
+        this.el_bar.appendChild('')
+    }
+}
+
+
 let id = 'ckhjfchndw348732947'
 
 poll = new Poll(id)

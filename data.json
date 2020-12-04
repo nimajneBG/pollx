@@ -1,4 +1,11 @@
 {
     "title": "Is this a Test Poll?",
-    "description": "What do you think is this just a Poll for testing? How knows"
+    "description": "What do you think is this just a Poll for testing? How knows",
+    "options": [
+        "Option 1",
+        "Option 2",
+        "Option 3",
+        "Option 4"
+    ],
+    "select_more_options": false
 }

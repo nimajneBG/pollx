@@ -2,11 +2,17 @@
 
 :root {
     /* Colors */
+    /* https://coolors.co/031d44-04395e-3a6e73-70a288-a5ad87-dab785-d5896f-dd705b-ad4846-583345 */
     --oxford-blue: #031d44ff;
     --indigo-dye: #04395eff;
+    --ming: #3a6e73ff;
     --polished-pine: #70a288ff;
+    --sage: #a5ad87ff;
     --burlywood: #dab785ff;
     --copper-crayola: #d5896fff;
+    --terra-cotta: #dd705bff;
+    --deep-chestnut: #ad4846ff;
+    --eggplant: #583345ff;
 
     --bg: #f2f2f2;
     --fg: #fff;
@@ -25,9 +31,11 @@ body {
     background-color: var(--bg);
 }
 
-footer, header {
+footer,
+header {
     background-color: var(--fg);
     padding: 12px;
+    z-index: 3;
 }
 
 header {
@@ -42,6 +50,9 @@ header {
 
 header a.company {
     text-decoration: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 header .placeholder {
@@ -52,7 +63,9 @@ header h1 {
     font-size: 36px;
 }
 
-header p, header input, header a.button {
+header p,
+header input,
+header a.button {
     font-size: 16px;
 }
 
@@ -73,13 +86,15 @@ hr {
     margin: 20px 0;
 }
 
-a.button, button {
+a.button,
+button {
     text-decoration: none;
     padding: 10px;
     color: var(--fg);
     background-color: var(--indigo-dye);
     border: 1px solid var(--indigo-dye);
     border-radius: 4px;
+    cursor: pointer;
 }
 
 main {
