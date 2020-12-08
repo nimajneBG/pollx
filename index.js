@@ -19,7 +19,10 @@ db.connect(err => {
 })
 
 
-//Frontend
+// Frontend
+
+// Static (CSS & JS)
+app.use('/src/', express.static('src/static'))
 
 // GET Home
 app.get('/', (req, res) => {
