@@ -69,7 +69,7 @@ app.get('/api/poll/:id', (req, res) => {
 // GET Poll results
 app.get('/api/results/:id', (req, res) => {
     res.json({
-        "id": req.params.id
+        'id': req.params.id
     })
 })
 
