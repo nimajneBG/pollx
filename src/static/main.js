@@ -4,7 +4,7 @@ class Poll {
     }
 
     async fetchData() {
-        await fetch('./data.json')
+        await fetch(`../api/poll/${this.id}`)
         .then( resp => resp.json() )
         .then( data => this.data = data )
 
@@ -25,7 +25,7 @@ class chart {
 }
 
 
-let id = 'ckhjfchndw348732947'
+let id = 1
 
 poll = new Poll(id)
 

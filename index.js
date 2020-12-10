@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const mysql = require('mysql')
+const path = require('path')
 
 // Load config
 const { config } = require('./config')
@@ -22,16 +23,16 @@ db.connect(err => {
 // Frontend
 
 // Static (CSS & JS)
-app.use('/src/', express.static('src/static'))
+app.use('/src/', express.static(path.join(__dirname + '/src/static')))
 
 // GET Home
 app.get('/', (req, res) => {
-    res.send('Homepage')
+    res.sendFile(path.join(__dirname + '/src/index.html'))
 })
 
 // GET Poll
 app.get('/poll/:id', (req, res) => {
-    res.send(`Poll: ${req.params.id}`)
+    res.sendFile(path.join(__dirname + '/src/poll.html'))
 })
 
 // GET Create poll
