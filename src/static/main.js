@@ -22,14 +22,73 @@ class Poll {
         }
     }
 
+    vote() {
+        console.log(`Voted option: `)
+    }
+
     async fetchData() {
         await fetch(`../api/poll/${this.id}`)
         .then( resp => resp.json() )
         .then( data => this.data = data )
 
-        this.setSpinner(false)
-
         console.log(this.data);
+    }
+
+    setTitle() {
+        document.title = `POLLX: ${this.data.title}`
+        document.getElementById('poll-title').innerHTML = this.data.title
+    }
+
+    setDescription() {
+        document.getElementById('poll-description').innerHTML = this.data.description
+    }
+
+    setQuestions() {
+        let pollContainer = document.getElementsByClassName('poll')[0]
+
+        for (let i = 0; i < this.data.questions.length; i++) {
+            let option = document.createElement('div')
+            option.classList.add('option')
+
+            let input = document.createElement('input')
+            input.setAttribute('type', 'radio')
+            input.setAttribute('name', 'option')
+            input.setAttribute('id', `option${i}`)
+
+            let span = document.createElement('span')
+            span.classList.add('checkmark')
+
+            let label = document.createElement('label')
+            label.setAttribute('for', `option${i}`)
+            label.innerHTML = this.data.questions[i]
+
+            option.appendChild(input)
+            option.appendChild(span)
+            option.appendChild(label)
+
+            pollContainer.appendChild(option)
+        }
+
+        let button = document.createElement('button')
+        button.classList.add('vote')
+        button.id = 'vote'
+        button.innerHTML = 'Vote!'
+
+        button.onclick = () => {
+            this.vote()
+        }
+
+        pollContainer.appendChild(button)
+    }
+
+    async displayData() {
+        await this.fetchData()
+
+        this.setTitle()
+        this.setDescription()
+        this.setQuestions()
+
+        this.setSpinner(false)
     }
 }
 
@@ -50,5 +109,5 @@ const poll = new Poll()
 
 document.body.onload = () => {
     poll.getId()
-    poll.fetchData()
+    poll.displayData()
 }

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../src/main.css">
     <link rel="stylesheet" href="../src/poll.css">
     <script src="../src/main.js" defer></script>
-    <title>POLLX: {{ poll-title }}</title>
+    <title>POLLX</title>
 </head>
 
 <body>
@@ -33,37 +33,9 @@
             <p class="spinner-text" id="spinner-text">Loading...</p>
         </div>
         <div class="content" id="content">
-            <h1 class="pollx">{{ poll-title }}</h1>
-            <p class="description">
-                {{ poll-description }}
-            </p>
-            <div class="poll">
-                <div class="option">
-                    <input type="radio" name="option" id="option0">
-                    <span class="checkmark"></span>
-                    <label for="option0">{{ poll-option[0] }}</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" name="option" id="option1">
-                    <span class="checkmark"></span>
-                    <label for="option1">{{ poll-option[1] }}</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" name="option" id="option2">
-                    <span class="checkmark"></span>
-                    <label for="option2">{{ poll-option[2] }}</label>
-                </div>
-
-                <div class="option">
-                    <input type="radio" name="option" id="option3">
-                    <span class="checkmark"></span>
-                    <label for="option3">{{ poll-option[3] }}</label>
-                </div>
-
-                <button id="vote">Vote</button>
-            </div>
+            <h1 class="pollx" id="poll-title">{{ poll-title }}</h1>
+            <p class="description" id="poll-description"></p>
+            <div class="poll"></div>
 
             <div class="result">
                 <figure>
