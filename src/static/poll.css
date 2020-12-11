@@ -1,6 +1,22 @@
-main div.content div.poll,
-main div.content div.solution {
+main div.content div.poll {
     text-align: left;
+}
+
+.content {
+    display: none;
+}
+
+.result {
+    display: none;
+}
+
+.spinner-container {
+    margin-top: 100px;
+}
+
+.spinner-text {
+    font-size: 20px;
+    margin-top: 20px;
 }
 
 .poll {

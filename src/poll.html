@@ -28,7 +28,11 @@
     </header>
 
     <main>
-        <div class="content">
+        <div class="spinner-container" id="spinner-container">
+            <div class="lds-dual-ring" id="spinner"></div>
+            <p class="spinner-text" id="spinner-text">Loading...</p>
+        </div>
+        <div class="content" id="content">
             <h1 class="pollx">{{ poll-title }}</h1>
             <p class="description">
                 {{ poll-description }}
