@@ -36,8 +36,8 @@ app.get('/poll/:id', (req, res) => {
 })
 
 // GET Create poll
-app.get('/create-poll', (res, req) => {
-    res.send('Create new Poll')
+app.get('/create-poll', (req, res) => {
+    res.sendFile(path.join(__dirname + '/src/create-poll.html'))
 })
 
 
