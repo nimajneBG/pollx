@@ -45,10 +45,7 @@ app.get('/create-poll', (req, res) => {
 
 // GET Poll data
 app.get('/api/poll/:id', (req, res) => {
-    // SQL Query
-    let sql = 'SELECT * FROM polls WHERE id = ' + req.params.id
-
-    db.query(sql, (err, result) => {
+    db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
             return console.error(`Error: ${err.message}`);
@@ -77,7 +74,7 @@ app.get('/api/results/:id', (req, res) => {
 // POST Vote
 app.post('/api/vote/:id', (req, res) => {
     res.send(`Voted on poll: ${req.params.id}`)
-    console.log('Voted')
+    console.log(`Voted on poll: ${req.params.id}`)
 })
 
 // POST Create poll
