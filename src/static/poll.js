@@ -2,6 +2,7 @@ class Poll {
     constructor() {
         this.spinnerContainer = document.getElementById('spinner-container')
         this.content = document.getElementById('content')
+        this.msgContainer = document.getElementById('msg-container')
     }
 
     getId() {
@@ -13,6 +14,7 @@ class Poll {
 
     setSpinner(spinner = Boolean) {
         /* Displays the Spinner if `spinner` is true and displays if it's false */
+        this.msgContainer.style.display = 'none'
         if (spinner) {
             this.spinnerContainer.style.display = 'block'
             this.content.style.display = 'none'
@@ -26,12 +28,37 @@ class Poll {
         console.log(`Voted option: `)
     }
 
-    async fetchData() {
-        await fetch(`../api/poll/${this.id}`)
-        .then( resp => resp.json() )
-        .then( data => this.data = data )
+    showMsg(msg = String, closeable = Boolean, type = String) {
+        let p = document.createElement('p')
 
-        console.log(this.data);
+        p.innerHTML = msg
+
+        this.msgContainer.appendChild(p)
+        this.msgContainer.style.display = 'flex'
+
+        this.content.style.display, this.spinnerContainer.style.display = 'none'
+        
+        console.error(`Msg: ${msg}`)
+    }
+
+    async fetchData() {
+        return await fetch(`../api/poll/${this.id}`)
+            .then(resp => {
+                if (!resp.ok)
+                    throw new Error('No poll with this id found')
+
+                return resp.json()
+            })
+            .then(data => {
+                this.data = data
+
+                return true
+            })
+            .catch(err => {
+                this.showMsg(err, false, 'err')
+
+                return false
+            })
     }
 
     setTitle() {
@@ -81,14 +108,15 @@ class Poll {
         pollContainer.appendChild(button)
     }
 
-    async displayData() {
-        await this.fetchData()
+    async displayPoll() {
+        if (await this.fetchData()) {
 
-        this.setTitle()
-        this.setDescription()
-        this.setQuestions()
+            this.setTitle()
+            this.setDescription()
+            this.setQuestions()
 
-        this.setSpinner(false)
+            this.setSpinner(false)
+        }
     }
 }
 
@@ -109,5 +137,5 @@ const poll = new Poll()
 
 document.body.onload = () => {
     poll.getId()
-    poll.displayData()
+    poll.displayPoll()
 }
