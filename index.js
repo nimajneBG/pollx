@@ -56,14 +56,11 @@ app.get('/api/poll/:id', (req, res) => {
             return console.error(`Error: ${err.message}`);
         }
 
-        if (result.length > 0) 
-        {
+        if (result.length > 0) {
             result[0].questions = JSON.parse(result[0].questions)
 
             res.json(result[0])
-        }
-        else 
-        {
+        } else {
             res.status(404).send(`Error: No Poll with id: ${req.params.id}`)
         }
     })
@@ -90,5 +87,14 @@ app.post('/api/create-poll', (req, res) => {
 
 // Start server
 app.listen(config.port, () => {
-    console.log(`POLLX running at http://localhost:${config.port}`)
+    console.log(`
+ _______         __   __           
+|_   __ \\       [  | [  |          
+  | |__) | .--.  | |  | |  _   __  
+  |  ___// .'\`\\ \\| |  | | [ \\ [  ] 
+ _| |_   | \\__. || |  | |  > '  <  
+|_____|   '.__.'[___][___][__]\`\\_] 
+
+    `)
+    console.log(`... running at http://localhost:${config.port}\n\n`)
 })
