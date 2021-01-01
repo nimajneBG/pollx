@@ -25,6 +25,11 @@ db.connect(err => {
 // Static (CSS & JS)
 app.use('/src/', express.static(path.join(__dirname + '/src/static')))
 
+// Favicons
+app.use('/', express.static(path.join(__dirname + '/src/logo')))
+
+app.use('/', express.static(path.join(__dirname + '/src/config')))
+
 // GET Home
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/src/index.html'))
