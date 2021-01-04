@@ -38,6 +38,20 @@ header {
     z-index: 3;
 }
 
+.noscript {
+    z-index: 5;
+    background-color: var(--deep-chestnut);
+    position: relative;
+    padding: 5px;
+    left: 0;
+    top: 0;
+}
+
+.noscript span {
+    color: var(--bg);
+    font-size: 18px;
+}
+
 header {
     display: flex;
     flex-direction: row;
