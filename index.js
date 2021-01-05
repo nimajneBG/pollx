@@ -13,10 +13,14 @@ let db = mysql.createConnection(config.db)
 // Connect to database
 db.connect(err => {
     if (err) {
-        return console.error(`Error: ${err.message}`)
+        return console.error(`[mysql] Error: ${err.message}`)
     }
 
-    console.log('Connected to database')
+    console.log('[mysql] Connected to database')
+})
+
+db.on('error',  err => {
+    console.error(`[mysql] Error: ${err}`);
 })
 
 
@@ -53,7 +57,7 @@ app.get('/api/poll/:id', (req, res) => {
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
-            return console.error(`Error: ${err.message}`);
+            return console.error(`[mysql] Error: ${err.message}`);
         }
 
         if (result.length > 0) {
