@@ -57,7 +57,9 @@ app.get('/api/poll/:id', (req, res) => {
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
-            return console.error(`[mysql] Error: ${err.message}`);
+            console.error(`[mysql] Error: ${err.message}`)
+            res.status(500).send(`Something went wrong`)
+            return 0
         }
 
         if (result.length > 0) {
