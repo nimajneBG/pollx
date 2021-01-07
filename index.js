@@ -38,22 +38,6 @@ app.use('/', express.static(path.join(__dirname + '/src/logo')))
 // Manifest
 app.use('/', express.static(path.join(__dirname + '/src/config')))
 
-// GET Home
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/src/index.html'))
-})
-
-// GET Poll
-app.get('/poll/:id', (req, res) => {
-    res.sendFile(path.join(__dirname + '/src/poll.html'))
-})
-
-// GET Create poll
-app.get('/create-poll', (req, res) => {
-    res.sendFile(path.join(__dirname + '/src/create-poll.html'))
-})
-
-
 // API
 
 // GET Poll data
