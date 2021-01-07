@@ -20,11 +20,14 @@ db.connect(err => {
 })
 
 db.on('error',  err => {
-    console.error(`[mysql] Error: ${err}`);
+    console.error(`[mysql] Error: ${err}`)
 })
 
 
 // Frontend
+
+// Pages
+app.use('/', require('./pages'))
 
 // Static (CSS & JS)
 app.use('/src/', express.static(path.join(__dirname + '/src/static')))
@@ -32,6 +35,7 @@ app.use('/src/', express.static(path.join(__dirname + '/src/static')))
 // Favicons
 app.use('/', express.static(path.join(__dirname + '/src/logo')))
 
+// Manifest
 app.use('/', express.static(path.join(__dirname + '/src/config')))
 
 // GET Home
