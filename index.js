@@ -5,7 +5,7 @@ const path = require('path')
 // Load config
 const { config } = require('./config')
 
-// 
+// Import routes
 const pages = require('./routes/pages')
 const api = require('./routes/api')
 
