@@ -1,3 +1,4 @@
+const { query } = require('express')
 const mysql = require('mysql')
 
 // Load config
@@ -19,6 +20,14 @@ db.on('error',  err => {
     console.error(`[mysql] Error: ${err}`)
 })
 
+const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/
+
+isValidEmail = email => {
+    if (email.length >= 5)
+        return emailRegex.test(email)
+    else 
+        return false
+}
 
 exports.getPollData = (req, res) => {
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
@@ -39,16 +48,31 @@ exports.getPollData = (req, res) => {
 }
 
 exports.createPoll = (req, res) => {
-    const { title, description, public, answers } = req.body
-    if ( (title == undefined || description == undefined || public == undefined || answers == undefined) || ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || typeof answers !== 'object' ) ) {
+    const { title, description, public, answers, email } = req.body
+
+    // Check user input
+    if ( title == undefined || description == undefined || public == undefined || answers == undefined || email == undefined )
         return res.sendStatus(400)
+
+    if ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || typeof answers !== 'object' || !isValidEmail(email) )
+        return res.sendStatus(400)
+
+    const queryValues = {
+        "title": title,
+        "description": description,
+        "public": public,
+        "answers": JSON.stringify(answers),
+        "email": email
     }
+    
+    db.query('INSERT INTO polls SET ?', queryValues, (err, result) => {
+        if (err) {
+            console.error(`[mysql] Error: ${err.message}`)
+            res.sendStatus(500)
+        }
 
-    /*
-    db.querry('INSERT INTO polls SET ?', querryValues, (err, result) => {
-
-    })*/
-    res.json(req.body)
+        res.json({ 'id': result.insertId })
+    })
 }
 
 exports.getResults = (req, res) => {
