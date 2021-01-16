@@ -27,7 +27,7 @@ exports.getPollData = (req, res) => {
             console.error(`[mysql] Error: ${err.message}`)
             res.status(500).json({ 'error_message' : 'Something went wrong' })
         } else if (result.length > 0) {
-            result[0].questions = JSON.parse(result[0].questions)
+            result[0].answers = JSON.parse(result[0].answers)
 
             result[0].public = !!result[0].public
 
@@ -39,6 +39,15 @@ exports.getPollData = (req, res) => {
 }
 
 exports.createPoll = (req, res) => {
+    const { title, description, public, answers } = req.body
+    if ( (title == undefined || description == undefined || public == undefined || answers == undefined) || ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || typeof answers !== 'object' ) ) {
+        return res.sendStatus(400)
+    }
+
+    /*
+    db.querry('INSERT INTO polls SET ?', querryValues, (err, result) => {
+
+    })*/
     res.json(req.body)
 }
 

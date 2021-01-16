@@ -12,7 +12,7 @@ CREATE TABLE `polls` (
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `id` int(11) NOT NULL,
   `public` tinyint(1) NOT NULL,
-  `questions` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`questions`))
+  `answers` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`answers`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `results`;

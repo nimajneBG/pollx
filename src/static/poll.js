@@ -44,8 +44,10 @@ class Poll {
     async fetchData() {
         return await fetch(`../api/poll/${this.id}`)
             .then(resp => {
-                if (!resp.ok)
-                    throw new Error('No poll with this id found')
+                if (!resp.ok) {
+                    //console.log(`resp.json():`, resp)
+                    throw new Error(resp.json())
+                }
 
                 return resp.json()
             })
@@ -55,7 +57,8 @@ class Poll {
                 return true
             })
             .catch(err => {
-                this.showMsg(err, false, 'err')
+                console.log(`Hier:`, err)
+                this.showMsg(err.error_message, false, 'err')
 
                 return false
             })
@@ -73,7 +76,7 @@ class Poll {
     setQuestions() {
         let pollContainer = document.getElementsByClassName('poll')[0]
 
-        for (let i = 0; i < this.data.questions.length; i++) {
+        for (let i = 0; i < this.data.answers.length; i++) {
             let option = document.createElement('div')
             option.classList.add('option')
 
@@ -87,7 +90,7 @@ class Poll {
 
             let label = document.createElement('label')
             label.setAttribute('for', `option${i}`)
-            label.innerHTML = this.data.questions[i]
+            label.innerHTML = this.data.answers[i]
 
             option.appendChild(input)
             option.appendChild(span)
