@@ -2,7 +2,7 @@ const { query } = require('express')
 const mysql = require('mysql')
 
 // Load config
-const { config } = require('./config')
+const { config } = require('../config')
 
 // Create connection to the MySQL Server
 let db = mysql.createConnection(config.db)
@@ -69,7 +69,7 @@ exports.createPoll = (req, res) => {
     }
     
     db.query('INSERT INTO polls SET ?', queryValues, (err, result) => {
-        if (err) {
+        if ( err ) {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else {
