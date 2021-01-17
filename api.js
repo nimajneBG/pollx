@@ -30,6 +30,9 @@ isValidEmail = email => {
 }
 
 exports.getPollData = (req, res) => {
+    if ( isNaN(req.params.id) )
+        return res.sendStatus(400)
+
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
@@ -69,9 +72,9 @@ exports.createPoll = (req, res) => {
         if (err) {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
+        } else {
+            res.json({ 'id': result.insertId })
         }
-
-        res.json({ 'id': result.insertId })
     })
 }
 
@@ -82,5 +85,44 @@ exports.getResults = (req, res) => {
 }
 
 exports.vote = (req, res) => {
-    res.send(`Voted on poll: ${req.params.id}`)
+    const { option } = req.body
+
+    if ( option == undefined )
+        return res.sendStatus(400)
+    
+    if ( typeof option !== 'number' )
+        return res.sendStatus(400)
+    
+    if ( isNaN(req.params.id) )
+        return res.sendStatus(400)
+
+    if ( req.params.id < 0 )
+        return res.sendStatus(400)
+    
+    db.query('SELECT answers FROM polls WHERE id = ?', [req.params.id], (err, result) => {
+        if ( err ) {
+            console.error(`[mysql] Error: ${err.message}`)
+            res.sendStatus(500)
+        } else if ( result.length > 0 ) {
+            answerLength = JSON.parse(result[0].answers).length
+            
+            if ( req.params.id < answerLength ) {
+                const queryValues = {
+                    "poll_id": req.params.id,
+                    "selected_option": option
+                }
+
+                db.query('INSERT INTO results SET ?', queryValues, (err2, result2) => {
+                    if ( err2 ) {
+                        console.error(`[mysql] Error: ${err2.message}`)
+                        res.sendStatus(500)
+                    } else {
+                        res.sendStatus(200)
+                    }
+                })
+            }
+        } else {
+            res.sendStatus(404)
+        }
+    })
 }
