@@ -31,14 +31,29 @@ CREATE TABLE `results` (
     `opt9` int(11)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `users` (
+    `id` int(11) NOT NULL,
+    `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+    `email` text COLLATE utf8mb4_unicode_ci NOT NULL,
+    `password` text COLLATE utf8mb4_unicode_ci NOT NULL,
+    `voted_polls` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`voted_polls`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 ALTER TABLE `polls`
     ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `results`
     ADD PRIMARY KEY (`poll_id`);
 
+ALTER TABLE `users`
+    ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `polls`
     MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+ALTER TABLE `users`
+    MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 
 COMMIT;
