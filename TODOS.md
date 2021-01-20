@@ -6,8 +6,9 @@
   - [x] Base system
   - [ ] Cookies to check if the user already voted
 - [x] Create poll (api)
-- [ ] Get Results (api)
+- [x] Get Results (api)
 - [ ] Login/user system
+  - [x] Add to database
 - [ ] Switch to serverside rendering (ejs)
 
 ## Frontend

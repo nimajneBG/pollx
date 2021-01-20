@@ -43,21 +43,30 @@ exports.getPollData = (req, res) => {
 
             result[0].public = !!result[0].public
 
+            delete result[0].email
+            delete result[0].id
+            delete result[0].public
+
             res.json(result[0])
         } else {
-            res.status(404).json({ 'error_message' : `Error: No Poll with id: ${req.params.id}` })
+            res.sendStatus(404)
         }
     })
 }
 
 exports.createPoll = (req, res) => {
-    const { title, description, public, answers, email } = req.body
+    const { title, description, public, email } = req.body
+
+    let answers = req.body.answers
+
+    if ( answers.length > 9 ) 
+        answers = answers.slice(0, 9)
 
     // Check user input
     if ( title == undefined || description == undefined || public == undefined || answers == undefined || email == undefined )
         return res.sendStatus(400)
 
-    if ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || typeof answers !== 'object' || !isValidEmail(email) )
+    if ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || !Array.isArray(answers) || !isValidEmail(email) )
         return res.sendStatus(400)
 
     const queryValuesPoll = {
@@ -75,9 +84,7 @@ exports.createPoll = (req, res) => {
         } else {
             const id = result.insertId
 
-            let queryValuesResults = {
-                'poll_id': id
-            }
+            let queryValuesResults = { 'poll_id': id }
 
             for (let i = 0; i < answers.length; i++) {
                 queryValuesResults[`opt${i}`] = 0
@@ -99,14 +106,15 @@ exports.getResults = (req, res) => {
     if ( isNaN(req.params.id) )
         return res.sendStatus(400)
     
-    db.query('SELECT selected_option FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
+    db.query('SELECT * FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
         if ( err ) {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
-
+            delete result[0].poll_id
+            res.json(result[0])
         } else {
-            res.json({ 'msg': 'No votes on this poll yet' })
+            res.sendStatus(404)
         }
     })
 }
@@ -128,7 +136,7 @@ exports.vote = (req, res) => {
     
     if ( isNaN(req.params.id) )
         return res.sendStatus(400)
-    
+
     db.query('SELECT answers FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         if ( err ) {
             console.error(`[mysql] Error: ${err.message}`)
