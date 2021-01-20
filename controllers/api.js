@@ -60,7 +60,7 @@ exports.createPoll = (req, res) => {
     if ( typeof title !== 'string' || typeof description !== 'string' || typeof public !== 'boolean' || typeof answers !== 'object' || !isValidEmail(email) )
         return res.sendStatus(400)
 
-    const queryValues = {
+    const queryValuesPoll = {
         "title": title,
         "description": description,
         "public": public,
@@ -68,12 +68,29 @@ exports.createPoll = (req, res) => {
         "email": email
     }
     
-    db.query('INSERT INTO polls SET ?', queryValues, (err, result) => {
+    db.query('INSERT INTO polls SET ?', queryValuesPoll, (err, result) => {
         if ( err ) {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else {
-            res.json({ 'id': result.insertId })
+            const id = result.insertId
+
+            let queryValuesResults = {
+                'poll_id': id
+            }
+
+            for (let i = 0; i < answers.length; i++) {
+                queryValuesResults[`opt${i}`] = 0
+            }
+        
+            db.query('INSERT INTO results SET ?', queryValuesResults, (err2, result2) => {
+                if ( err2 ) {
+                    console.error(`[mysql] Error: ${err2.message}`)
+                    res.send(500)
+                } else {
+                    res.json({ 'id': id })
+                }
+            })
         }
     })
 }
@@ -129,7 +146,6 @@ exports.vote = (req, res) => {
                         console.error(`[mysql] Error: ${err2.message}`)
                         res.sendStatus(500)
                     } else {
-                        console.table(result2)
                         res.sendStatus(200)
                     }
                 })
