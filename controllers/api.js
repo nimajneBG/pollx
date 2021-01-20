@@ -9,7 +9,7 @@ let db = mysql.createConnection(config.db)
 
 // Connect to database
 db.connect(err => {
-    if (err) {
+    if ( err ) {
         return console.error(`[mysql] Error: ${err.message}`)
     }
 
@@ -79,8 +79,18 @@ exports.createPoll = (req, res) => {
 }
 
 exports.getResults = (req, res) => {
-    res.json({
-        'id': req.params.id
+    if ( isNaN(req.params.id) )
+        return res.sendStatus(400)
+    
+    db.query('SELECT selected_option FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
+        if ( err ) {
+            console.error(`[mysql] Error: ${err.message}`)
+            res.sendStatus(500)
+        } else if ( result.length > 0 ) {
+
+        } else {
+            res.json({ 'msg': 'No votes on this poll yet' })
+        }
     })
 }
 
@@ -89,14 +99,17 @@ exports.vote = (req, res) => {
 
     if ( option == undefined )
         return res.sendStatus(400)
-    
+
     if ( typeof option !== 'number' )
         return res.sendStatus(400)
     
-    if ( isNaN(req.params.id) )
+    if ( option < 0 )
         return res.sendStatus(400)
 
-    if ( req.params.id < 0 )
+    if ( option > 9 )
+        return res.sendStatus(400)
+    
+    if ( isNaN(req.params.id) )
         return res.sendStatus(400)
     
     db.query('SELECT answers FROM polls WHERE id = ?', [req.params.id], (err, result) => {
@@ -104,19 +117,19 @@ exports.vote = (req, res) => {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
-            answerLength = JSON.parse(result[0].answers).length
-            
-            if ( req.params.id < answerLength ) {
-                const queryValues = {
-                    "poll_id": req.params.id,
-                    "selected_option": option
-                }
+            result = result[0]
 
-                db.query('INSERT INTO results SET ?', queryValues, (err2, result2) => {
-                    if ( err2 ) {
+            console.table(result)
+
+            const answersLength = JSON.parse(result.answers).length
+
+            if ( answersLength > option ) {
+                db.query('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, req.params.id], (err2, result2) => {
+                    if (err2) {
                         console.error(`[mysql] Error: ${err2.message}`)
                         res.sendStatus(500)
                     } else {
+                        console.table(result2)
                         res.sendStatus(200)
                     }
                 })
