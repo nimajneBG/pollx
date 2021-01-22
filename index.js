@@ -1,4 +1,5 @@
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const app = express()
 const path = require('path')
 
@@ -12,6 +13,7 @@ const api = require('./routes/api')
 // Configure express
 app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
+app.use(cookieParser())
 app.set('view engine', 'ejs')
 
 // Frontend
