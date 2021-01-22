@@ -12,6 +12,7 @@ const api = require('./routes/api')
 // Configure express
 app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
+app.set('view engine', 'ejs')
 
 // Frontend
 
