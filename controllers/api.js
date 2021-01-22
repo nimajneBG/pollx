@@ -137,24 +137,36 @@ exports.vote = (req, res) => {
     if ( isNaN(req.params.id) )
         return res.sendStatus(400)
 
-    db.query('SELECT answers FROM polls WHERE id = ?', [req.params.id], (err, result) => {
+    const id = parseInt(req.params.id)
+
+    let { voted_polls } = req.cookies
+
+    if ( !voted_polls ) {
+        voted_polls = new Array
+    } else {
+        voted_polls = JSON.parse(voted_polls)
+
+        if (voted_polls.indexOf(id) != -1) 
+            return res.json({ msg: 'Already voted on this poll'})
+    }
+
+    db.query('SELECT answers FROM polls WHERE id = ?', [id], (err, result) => {
         if ( err ) {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
             result = result[0]
 
-            console.table(result)
-
             const answersLength = JSON.parse(result.answers).length
 
             if ( answersLength > option ) {
-                db.query('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, req.params.id], (err2, result2) => {
+                db.query('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, id], (err2, result2) => {
                     if (err2) {
                         console.error(`[mysql] Error: ${err2.message}`)
                         res.sendStatus(500)
                     } else {
-                        res.sendStatus(200)
+                        voted_polls.push(id)
+                        res.clearCookie('voted_poll').cookie('voted_poll', JSON.stringify(voted_polls)).sendStatus(200)
                     }
                 })
             }
