@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../src/main.css">
+    <link rel="stylesheet" href="../src/poll.css">
+    <script src="../src/poll.js" defer></script>
+    <title>POLLX</title>
+
+    <!-- Mainfest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+</head>
+
+<body>
+    <noscript>
+        <div class="noscript">
+            <span>This page needs JavaScript to function and it seems like you have disabled or blocked it</span>
+        </div>
+    </noscript>
+
+    <header>
+        <a href="/" class="company">
+            <div>
+                <h1 class="pollx">POLLX</h1>
+                <p>Free online Polls</p>
+            </div>
+        </a>
+
+        <div class="placeholder"></div>
+
+        <div>
+            <input type="text" placeholder="Find poll">
+            <a href="#" class="button">Create new Poll</a>
+        </div>
+    </header>
+
+    <main>
+        <div class="spinner-container" id="spinner-container">
+            <div class="lds-dual-ring" id="spinner"></div>
+            <p class="spinner-text" id="spinner-text">Loading...</p>
+        </div>
+        <div class="msg-container" id="msg-container"></div>
+        <div class="content" id="content">
+            <h1 class="pollx" id="poll-title">{{ poll-title }}</h1>
+            <p class="description" id="poll-description"></p>
+            <div class="poll"></div>
+
+            <div class="result">
+                <figure>
+                    <figcaption>Results</figcaption>
+                    <div class="charts">
+                    </div>
+                </figure>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <span class="pollx">POLLX</span> &copy; by Benjamin Grau 2020
+    </footer>
+</body>
+
+</html>

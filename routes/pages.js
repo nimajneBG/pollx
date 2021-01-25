@@ -3,17 +3,17 @@ const path = require('path')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../src/index.html'))
+    res.render('index', {test: 'Das ist ein Test'})
 })
 
 // GET Poll
 router.get('/poll/:id', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../src/poll.html'))
+    res.render('poll')
 })
 
 // GET Create poll
 router.get('/create-poll', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../src/create-poll.html'))
+    res.render('create-poll')
 })
 
 module.exports = router
