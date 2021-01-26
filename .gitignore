@@ -2,5 +2,5 @@ node_modules/
 cert/
 .vscode/
 *.rest
-config.js
+shared/config.js
 old/

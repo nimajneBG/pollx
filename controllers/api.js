@@ -2,7 +2,7 @@ const { query } = require('express')
 const mysql = require('mysql')
 
 // Load config
-const { config } = require('../config')
+const { config } = require('../shared/config')
 
 // Create connection to the MySQL Server
 let db = mysql.createConnection(config.db)

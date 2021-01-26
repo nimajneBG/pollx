@@ -4,7 +4,7 @@ const app = express()
 const path = require('path')
 
 // Load config
-const { config } = require('./config')
+const { config } = require('./shared/config')
 
 // Import routes
 const pages = require('./routes/pages')
