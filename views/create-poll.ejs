@@ -18,27 +18,7 @@
 </head>
 
 <body>
-    <noscript>
-        <div class="noscript">
-            <span>This page needs JavaScript to function and it seems like you have disabled or blocked it</span>
-        </div>
-    </noscript>
-
-    <header>
-        <a href="#" class="company">
-            <div>
-                <h1 class="pollx">POLLX</h1>
-                <p>Free online Polls</p>
-            </div>
-        </a>
-
-        <div class="placeholder"></div>
-
-        <div>
-            <input type="text" placeholder="Find poll">
-            <a href="#" class="button">Create new Poll</a>
-        </div>
-    </header>
+    <%- include('modules/header') %>
 
     <main>
         <div class="content">
@@ -47,9 +27,8 @@
             </div>
         </div>
     </main>
-    <footer>
-        <span class="pollx">POLLX</span> &copy; by Benjamin Grau 2020
-    </footer>
+    
+    <%- include('modules/footer') %>
 </body>
 
 </html>
