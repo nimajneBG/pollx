@@ -1,5 +1,6 @@
 const { query } = require('express')
 const mysql = require('mysql')
+const isValidEmail = require('../shared/functions/isValidEmail')
 
 // Load config
 const { config } = require('../shared/config')
@@ -20,14 +21,12 @@ db.on('error',  err => {
     console.error(`[mysql] Error: ${err}`)
 })
 
-const emailRegex = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/
-
-isValidEmail = email => {
+/* isValidEmail = email => {
     if (email.length >= 5)
         return emailRegex.test(email)
     else 
         return false
-}
+} */
 
 exports.getPollData = (req, res) => {
     if ( isNaN(req.params.id) )
