@@ -14,7 +14,7 @@ const api = require('./routes/api')
 app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
 app.use(cookieParser())
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs')   // Use ejs for rendering
 
 // Frontend
 
@@ -32,6 +32,16 @@ app.use('/', express.static(path.join(__dirname + '/src/config')))
 
 // API
 app.use('/api', api)
+
+// Custom 404 and 500 error pages
+app.use((req, res) => {
+    res.status(404).render('error', { error: '404 Not found'})
+})
+
+app.use((error, req, res, next) => {
+    console.error(error, req);
+    res.status(500).render('error', { error: '500 Internal server Error'})
+})
 
 // Start server
 app.listen(config.port, () => {
