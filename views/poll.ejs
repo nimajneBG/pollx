@@ -19,6 +19,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <script>
+        // Getting id passed thru
+        const id = <%= id %>;
+    </script>
 </head>
 
 <body>
@@ -45,6 +50,9 @@
                         <label for="option<%= i %>"><%= option %></label>
                     </div>
                 <% }); %>
+                <button id="vote-btn">
+                    Vote
+                </button>
             </div>
 
             <div class="result">
