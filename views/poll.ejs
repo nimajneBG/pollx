@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="../src/main.css">
     <link rel="stylesheet" href="../src/poll.css">
     <script src="../src/poll.js" defer></script>
-    <title>POLLX</title>
+    <title>POLLX: <%= title %></title>
+
+    <!--Meta-->
+    <meta name="description" content="Vote on <%= title %>! <%= description %>">
 
     <!-- Mainfest -->
     <link rel="manifest" href="/manifest.json">
@@ -19,7 +22,7 @@
 </head>
 
 <body>
-    <%- include('modules/header') %>
+    <%- include('modules/header'); %>
 
     <main>
         <div class="spinner-container" id="spinner-container">
@@ -35,11 +38,11 @@
                 <%= description %>
             </p>
             <div class="poll">
-                <% options.forEach(option => {
+                <% answers.forEach( (option, i) => { %>
                     <div class="option">
-                        <input type="radio" name="option" id="option0">
+                        <input type="radio" name="option" id="option<%= i %>">
                         <span class="checkmark"></span>
-                        <label for="option0"><%= option %></label>
+                        <label for="option<%= i %>"><%= option %></label>
                     </div>
                 <% }); %>
             </div>
@@ -54,7 +57,7 @@
         </div>
     </main>
 
-    <%- include('modules/footer') %>
+    <%- include('modules/footer'); %>
 </body>
 
 </html>

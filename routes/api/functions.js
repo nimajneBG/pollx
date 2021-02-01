@@ -2,30 +2,6 @@
 const isValidEmail = require('../../shared/functions/isValidEmail')
 let db = require('../../shared/db')
 
-exports.getPollData = (req, res) => {
-    if ( isNaN(req.params.id) )
-        return res.sendStatus(400)
-
-    db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
-        // Error handeling
-        if (err) {
-            console.error(`[mysql] Error: ${err.message}`)
-            res.status(500).json({ 'error_message' : 'Something went wrong' })
-        } else if (result.length > 0) {
-            result[0].answers = JSON.parse(result[0].answers)
-
-            result[0].public = !!result[0].public
-
-            delete result[0].email
-            delete result[0].id
-            delete result[0].public
-
-            res.json(result[0])
-        } else {
-            res.sendStatus(404)
-        }
-    })
-}
 
 exports.createPoll = (req, res) => {
     const { title, description, public, email } = req.body

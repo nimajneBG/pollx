@@ -4,9 +4,6 @@ const router = express.Router()
 const api = require('./functions')
 
 
-// GET Poll data
-router.get('/poll/:id', api.getPollData)
-
 // GET Poll results
 router.get('/results/:id', api.getResults)
 

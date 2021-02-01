@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const pages = require('./functions')
+
 
 // GET Home
 router.get('/', (req, res) => {
@@ -8,9 +10,7 @@ router.get('/', (req, res) => {
 })
 
 // GET Poll
-router.get('/poll/:id', (req, res) => {
-    res.render('poll')
-})
+router.get('/poll/:id', pages.poll)
 
 // GET Create poll
 router.get('/create-poll', (req, res) => {

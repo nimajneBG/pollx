@@ -2,15 +2,12 @@ main div.content div.poll {
     text-align: left;
 }
 
-.content {
-    display: none;
-}
-
 .result {
     display: none;
 }
 
 .spinner-container {
+    display: none;
     margin-top: 100px;
 }
 
