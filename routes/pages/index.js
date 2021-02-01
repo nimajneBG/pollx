@@ -1,7 +1,8 @@
 const express = require('express')
-const path = require('path')
 const router = express.Router()
 
+
+// GET Home
 router.get('/', (req, res) => {
     res.render('index', {test: 'Das ist ein Test'})
 })

@@ -1,32 +1,6 @@
-const { query } = require('express')
-const mysql = require('mysql')
-const isValidEmail = require('../shared/functions/isValidEmail')
-
-// Load config
-const { config } = require('../shared/config')
-
-// Create connection to the MySQL Server
-let db = mysql.createConnection(config.db)
-
-// Connect to database
-db.connect(err => {
-    if ( err ) {
-        return console.error(`[mysql] Error: ${err.message}`)
-    }
-
-    console.log('[mysql] Connected to database')
-})
-
-db.on('error',  err => {
-    console.error(`[mysql] Error: ${err}`)
-})
-
-/* isValidEmail = email => {
-    if (email.length >= 5)
-        return emailRegex.test(email)
-    else 
-        return false
-} */
+// const { query } = require('express')
+const isValidEmail = require('../../shared/functions/isValidEmail')
+let db = require('../../shared/db')
 
 exports.getPollData = (req, res) => {
     if ( isNaN(req.params.id) )
