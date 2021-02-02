@@ -56,3 +56,4 @@ See `TODOS.md`
 
 - Fonts from fonts.google.com
 - ASCII Art created with http://www.patorjk.com/software/
+- Pop-up Library under `MIT` by Gregor Parzefall and Benjamin Grau https://github.com/nimajneBG/Pop-up-Library
