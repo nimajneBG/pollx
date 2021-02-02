@@ -16,13 +16,11 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	--popUpBg: rgba(26, 26, 26, 0.7);
 	--popUpWindowBg: #fff;
 	--popUpBtnLineColor: lightgrey;
-	--popUpBtnBg: #3498db;
-	--popUpBtnHoverBg: #2e80b7;
 	--popUpBtnTextColor: #fff;
 	--popUpTextColor: #000;
 	--popUpCloseColor: lightgrey;
 	--popUpCloseHoverColor: black;
-	--shadow: #ccc;
+	--shadow: #aaa;
 }
 
 .pop-up-bg {
@@ -114,27 +112,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 	font-size: 48pt;
 	text-align: center;
 	user-select: none;
-}
-
-.pop-up .standard-button,
-.toast .standard-button {
-	font-family: inherit;
-	padding: 10px;
-	font-size: 12pt;
-	border: 1px solid var(--popUpBtnBg);
-	cursor: pointer;
-	color: var(--popUpBtnTextColor);
-	background-color: var(--popUpBtnBg);
-	border-radius: 2px;
-	outline: none;
-	transition: background-color 0.2s, border-color 0.2s;
-	margin-left: 5px;
-}
-
-.pop-up .standard-button:hover,
-.toast .standard-button:hover {
-	background-color: var(--popUpBtnHoverBg);
-	border-color: var(--popUpBtnHoverBg);
 }
 
 .pop-up div.popup-close {

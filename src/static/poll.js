@@ -12,6 +12,10 @@ class Chart {
 
 class Poll {
 
+    checkVoted() {
+        
+    }
+
     findSelectedOption() {
         let options = document.getElementsByClassName('input-option')
         console.log(options)
