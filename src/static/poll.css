@@ -29,7 +29,6 @@ main div.content div.poll {
     display: flex;
     align-items: center;
     flex-direction: row;
-    gap: 10px;
 }
 
 .option > * {
