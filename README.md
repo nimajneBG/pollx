@@ -46,7 +46,7 @@
    ```
 
 # License 
-I'm not shure yet
+MIT
 
 # Todos
 
