@@ -18,7 +18,7 @@ exports.poll = (req, res) => {
 
             res.render('poll', result)
         } else {
-            res.sendStatus(404)
+            res.status(404).render('error', { error: 'No poll with this id' })
         }
     })
 }

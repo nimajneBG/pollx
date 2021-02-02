@@ -115,7 +115,7 @@ exports.vote = (req, res) => {
                         res.sendStatus(500)
                     } else {
                         voted_polls.push(id)
-                        res.clearCookie('voted_poll').cookie('voted_poll', JSON.stringify(voted_polls)).sendStatus(200)
+                        res.clearCookie('voted_polls').cookie('voted_polls', JSON.stringify(voted_polls)).sendStatus(200)
                     }
                 })
             }

@@ -45,12 +45,12 @@
             <div class="poll">
                 <% answers.forEach( (option, i) => { %>
                     <div class="option">
-                        <input type="radio" name="option" id="option<%= i %>">
+                        <input type="radio" name="option" id="option<%= i %>" class="input-option">
                         <span class="checkmark"></span>
                         <label for="option<%= i %>"><%= option %></label>
                     </div>
                 <% }); %>
-                <button id="vote-btn">
+                <button id="vote-btn" onclick="poll.vote()">
                     Vote
                 </button>
             </div>
