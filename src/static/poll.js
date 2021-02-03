@@ -1,3 +1,7 @@
+const cookieRegex = /voted_polls=(.[^;]*)/ig
+const commaRegex = /\%2C/g
+
+
 class Chart {
     constructor(data) {
         this.data = data
@@ -13,7 +17,18 @@ class Chart {
 class Poll {
 
     checkVoted() {
-        
+        // Check if there is a cookie voted_polls
+        if ( document.cookie.match(cookieRegex) ) {
+            // Parse cookie
+            let [ voted_polls ] = cookieRegex.exec(document.cookie)
+            voted_polls = JSON.parse(decodeURI(voted_polls.split('=')[1]).replace(commaRegex, ','))
+            
+            console.log('Voted polls:', voted_polls)
+
+            // Check if current pollid is in voted_polls
+            if (voted_polls.indexOf(id) != -1) 
+                console.log('Already voted')
+        }
     }
 
     findSelectedOption() {
@@ -32,7 +47,7 @@ class Poll {
 
         const selectedID = this.findSelectedOption()
 
-        if (selectedID) {
+        if (selectedID || selectedID === 0) {
             fetch(url, {
                 method: 'POST',
                 mode: 'same-origin',
