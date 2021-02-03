@@ -60,8 +60,17 @@ exports.getResults = (req, res) => {
             console.error(`[mysql] Error: ${err.message}`)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
-            delete result[0].poll_id
-            res.json(result[0])
+            result = result[0]
+            delete result.poll_id
+            
+            let resultArray = new Array
+            for ( let i = 0; i < 10; i++ ) {
+                const indexName = `opt${i}`
+                if ( result[indexName] || result[indexName] === 0 )
+                    resultArray.push(result[indexName])
+            }
+
+            res.json(resultArray)
         } else {
             res.sendStatus(404)
         }
