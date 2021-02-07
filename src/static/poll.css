@@ -48,6 +48,11 @@ svg {
     display: block;
 }
 
+.chart {
+    width: 100%;
+    max-height: 500px;
+}
+
 div.charts {
     display: flex;
     flex-direction: row-reverse;

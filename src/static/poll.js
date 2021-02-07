@@ -1,16 +1,83 @@
 const cookieRegex = /voted_polls=(.[^;]*)/ig
 const commaRegex = /\%2C/g
 
+const xmlns = "http://www.w3.org/2000/svg"
+
 
 class Chart {
     constructor(data) {
         this.data = data
-        this.el_bar = document.getElementById('bar-chart')
-        this.el_pie = document.getElementById('pie-chart')
+        this.total = new Number
     }
 
-    async drawLineDiagramm() {
-        this.el_bar.appendChild('')
+    computeValues() {
+        this.data.forEach(i => this.total += i)
+    }
+
+    create() {
+        if (typeof this.data === 'object' && this.data.length > 0) {
+            this.computeValues()
+
+            this.drawLineDiagramm()
+        }
+    }
+
+    drawLineDiagramm() {
+        let parentBarChart = document.getElementsByClassName('charts')[0]
+
+        this.barChart = document.createElementNS(xmlns, 'svg')
+        this.barChart.id = 'bar-chart'
+        this.barChart.classList.add('chart')
+        console.log(this.barChart)
+
+        // Generate viewBox
+        const viewBox = [0, 0, ( 15 * this.data.length + 5 ), 110]
+        this.barChart.setAttributeNS(null, 'viewBox', `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`)
+
+        console.log('SVG viewBox', viewBox)
+
+        // Generate background lines
+        let linesG = document.createElementNS(xmlns, 'g')
+        const linesYCoordinates = [5, 30, 55, 80, 105]
+
+        for ( let i = 0; i <= 4; i++ ) {
+            let line = document.createElementNS(xmlns, 'path')
+            const xRight = viewBox[2] - 2
+            line.setAttributeNS(null, 'd', `M 2 ${linesYCoordinates[i]} L ${xRight} ${linesYCoordinates[i]}`)
+            line.setAttributeNS(null, 'stroke-width', '0.1')
+            line.setAttributeNS(null, 'stroke', '#000')
+            linesG.appendChild(line)
+        }
+
+        this.barChart.appendChild(linesG)
+
+        // Generate Bars
+        let barsG = document.createElementNS(xmlns, 'g')
+
+        for ( let i = 0; i < this.data.length; i++ ) {
+            const percent = this.data[i] / this.total * 100
+
+            console.log(i, percent)
+
+            let bar = document.createElementNS(xmlns, 'rect')
+            bar.classList.add('bar', `color${i}`)
+            bar.setAttributeNS(null, 'width', '10')
+            bar.setAttributeNS(null, 'x', String(5 + 15 * i))
+            bar.setAttributeNS(null, 'y', String(105 - percent))
+            bar.setAttributeNS(null, 'height', String(percent))
+
+            barsG.appendChild(bar)
+        }
+
+        this.barChart.appendChild(barsG)
+
+        parentBarChart.appendChild(this.barChart)
+
+
+    }
+
+    createDescription() {
+
     }
 }
 
@@ -42,29 +109,28 @@ class Poll {
         return false
     }
 
-    afterVoting() {
+    async afterVoting() {
         // Disabling Vote button
         let voteBtn = document.getElementById('vote-btn')
         voteBtn.classList.add('disabled')
         voteBtn.setAttribute('onclick', 'let toast = new Toast({"message": "You already voted on this poll!","ok": true,"cancel": false,"custom": false,"close": false,"decay": true,"time": 10});toast.create().then();')
 
         // Loading results
-        this.getResults()
-
-        console.log(this.results)
+        await this.getResults()
 
         // Render diagram
-        const test = this.results
-        this.diagram = new Chart(test)
+        this.diagram = new Chart(this.results)
         this.diagram.create()
+        let resultElement = document.getElementById('result')
+        resultElement.style.display = 'block'
 
-        console.log(this.diagram.total)
+        console.log('Data in Chart class', this.diagram.data, 'Total in Chart class', this.diagram.total)
     }
 
-    getResults() {
+    async getResults() {
         const url = `../../api/results/${id}`
 
-        fetch(url).then(res => res.json()).then(data => this.results = data).catch(err => console.error(err))
+        await fetch(url).then(res => res.json()).then(data => this.results = data).catch(err => console.error(err))
     }
 
     vote() {

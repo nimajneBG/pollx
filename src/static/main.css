@@ -121,7 +121,7 @@ button.disabled {
 }
 
 main {
-    margin-top: 87px;
+    margin: 87px 0;
     padding: 25px;
     display: flex;
     justify-content: center;
