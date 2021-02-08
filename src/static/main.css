@@ -98,6 +98,10 @@ textarea {
     font-family: 'Roboto Slab', serif;
 }
 
+h2, figcaption {
+    font-size: 30px;
+}
+
 hr {
     border: 1.5px solid var(--fg);
     margin: 20px 0;
@@ -121,7 +125,7 @@ button.disabled {
 }
 
 main {
-    margin: 87px 0;
+    margin: 87px 0 10px 0;
     padding: 25px;
     display: flex;
     justify-content: center;

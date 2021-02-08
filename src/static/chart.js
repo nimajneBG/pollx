@@ -16,11 +16,12 @@ class Chart {
             this.computeValues()
 
             this.drawLineDiagramm()
+            this.createDescription()
         }
     }
 
     drawLineDiagramm() {
-        let parentBarChart = document.getElementsByClassName('charts')[0]
+        let barChartParent = document.getElementById('bar-chart-container')
 
         this.barChart = document.createElementNS(xmlns, 'svg')
         this.barChart.id = 'bar-chart'
@@ -68,12 +69,18 @@ class Chart {
 
         this.barChart.appendChild(barsG)
 
-        parentBarChart.appendChild(this.barChart)
+        barChartParent.appendChild(this.barChart)
 
 
     }
 
     createDescription() {
+        this.descriptionParagraphs = document.getElementsByClassName('description-p')
 
+        for (let i = 0; i < this.descriptionParagraphs.length; i++) {
+            const percent = Math.round((this.data[i] / this.total * 100) * 10) / 10
+
+            this.descriptionParagraphs[i].innerHTML += (String(percent) + '%')
+        }
     }
 }

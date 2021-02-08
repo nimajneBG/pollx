@@ -60,8 +60,14 @@
 
             <div class="result" id="result">
                 <figure>
-                    <figcaption>Results</figcaption>
+                    <figcaption class="pollx">Results</figcaption>
                     <div class="charts">
+                        <div id="bar-chart-container"></div>
+                        <div class="chart-description">
+                            <% answers.forEach( (option, i) => { %>
+                                <p class="description-p"><span class="color color<%= i; %>"></span>&nbsp;<%= option; %>:&nbsp;</p>
+                            <% }); %>
+                        </div>
                     </div>
                 </figure>
             </div>

@@ -1,4 +1,4 @@
-main div.content div.poll {
+main div.content div.poll, .chart-description {
     text-align: left;
 }
 
@@ -55,7 +55,11 @@ svg {
 
 div.charts {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
+}
+
+.charts > * {
+    margin: 20px 0 0 20px;
 }
 
 .chart-description {
