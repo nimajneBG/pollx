@@ -23,8 +23,11 @@ app.use(session({ secret: config.secret }))    // Init and use sessions
 // Pages
 app.use('/', pages)
 
-// Static (CSS & JS)
-app.use('/src/', express.static(path.join(__dirname + '/src/static')))
+// CSS
+app.use('/src/css', express.static(path.join(__dirname + '/src/static/css')))
+
+// JS
+app.use('/src/js', express.static(path.join(__dirname + '/src/static/js')))
 
 // Favicons
 app.use('/', express.static(path.join(__dirname + '/src/logo')))
