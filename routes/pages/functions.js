@@ -8,7 +8,7 @@ exports.poll = (req, res) => {
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
-            console.error(`[mysql] Error: ${err.message}`)
+            logger.mysql(err.message)
             res.status(500).render('error', { 'error' : 'Something went wrong' })
         } else if (result.length > 0) {
             result = result[0]

@@ -1,6 +1,7 @@
 // const { query } = require('express')
 const isValidEmail = require('../../shared/functions/isValidEmail')
 let db = require('../../shared/db')
+const logger = require('../../shared/logger')
 
 
 exports.createPoll = (req, res) => {
@@ -28,7 +29,7 @@ exports.createPoll = (req, res) => {
     
     db.query('INSERT INTO polls SET ?', queryValuesPoll, (err, result) => {
         if ( err ) {
-            console.error(`[mysql] Error: ${err.message}`)
+            logger.mysql(err.message)
             res.sendStatus(500)
         } else {
             const id = result.insertId
@@ -41,10 +42,11 @@ exports.createPoll = (req, res) => {
         
             db.query('INSERT INTO results SET ?', queryValuesResults, (err2, result2) => {
                 if ( err2 ) {
-                    console.error(`[mysql] Error: ${err2.message}`)
+                    logger.mysql(err2.message)
                     res.send(500)
                 } else {
                     res.json({ 'id': id })
+                    logger.info(`Created new poll ID: ${id}`)
                 }
             })
         }
@@ -57,7 +59,7 @@ exports.getResults = (req, res) => {
     
     db.query('SELECT * FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
         if ( err ) {
-            console.error(`[mysql] Error: ${err.message}`)
+            logger.mysql(err.message)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
             result = result[0]
@@ -73,6 +75,7 @@ exports.getResults = (req, res) => {
             res.json(resultArray)
         } else {
             res.sendStatus(404)
+            logger.debug(`Tried to get results of non existent poll ID: ${id}`)
         }
     })
 }
@@ -110,7 +113,7 @@ exports.vote = (req, res) => {
 
     db.query('SELECT answers FROM polls WHERE id = ?', [id], (err, result) => {
         if ( err ) {
-            console.error(`[mysql] Error: ${err.message}`)
+            logger.mysql(err.message)
             res.sendStatus(500)
         } else if ( result.length > 0 ) {
             result = result[0]
@@ -120,7 +123,7 @@ exports.vote = (req, res) => {
             if ( answersLength > option ) {
                 db.query('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, id], (err2, result2) => {
                     if (err2) {
-                        console.error(`[mysql] Error: ${err2.message}`)
+                        logger.mysql(err2.message)
                         res.sendStatus(500)
                     } else {
                         voted_polls.push(id)

@@ -4,3 +4,4 @@ cert/
 *.rest
 shared/config.js
 old/
+*.log

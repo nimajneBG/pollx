@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const logger = require('./logger')
 
 // Load config
 const { config } = require('./config')
@@ -9,14 +10,14 @@ let db = mysql.createConnection(config.db)
 // Connect to database
 db.connect(err => {
     if ( err ) {
-        return console.error(`[mysql] Error: ${err.message}`)
+        return logger.mysql(err.message)
     }
 
-    console.log('[mysql] Connected to database')
+    logger.mysql('Connected to database')
 })
 
 db.on('error',  err => {
-    console.error(`[mysql] Error: ${err}`)
+    logger.mysql(err)
 })
 
 module.exports = db

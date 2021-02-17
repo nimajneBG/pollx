@@ -3,6 +3,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const app = express()
 const path = require('path')
+const loggerMiddleware = require('./middleware/logger')
 
 // Load config
 const { config } = require('./shared/config')
@@ -12,6 +13,7 @@ const pages = require('./routes/pages')
 const api = require('./routes/api')
 
 // Configure express
+app.use(loggerMiddleware)
 app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
 app.use(cookieParser())                         // Use cookie parser
