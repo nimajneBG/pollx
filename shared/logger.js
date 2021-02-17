@@ -18,7 +18,7 @@ const logger = createLogger({
     },
     level: 'http',
     format: combine(
-        timestamp(),
+        timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
         myFormat
     ),
     transports: [
