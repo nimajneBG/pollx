@@ -1,4 +1,5 @@
 let db = require('../../shared/db')
+const logger = require('./../../shared/logger')
 
 
 exports.poll = (req, res) => {
