@@ -14,6 +14,7 @@
 - [x] Switch to serverside rendering (ejs)
 - [ ] Emails
 - [x] Logging
+- [ ] Adding an expiration/finish date for polls
 
 ## Frontend
 - [ ] Diagram rendering
@@ -22,3 +23,4 @@
   - [ ] Pie chart
 - [ ] Create poll page
 - [x] Voting
+- [ ] Switch to SASS/SCSS
