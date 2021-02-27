@@ -2,16 +2,23 @@
 
 ## Backend
 
-- [ ] Create voting system (api)
+- [x] Create voting system (api)
   - [x] Base system
-  - [ ] Cookies to check if the user already voted
+  - [x] Cookies to check if the user already voted
+  - [ ] Integrate user system
 - [x] Create poll (api)
+  - [ ] Integrate user system (Require account to create)
 - [x] Get Results (api)
 - [ ] Login/user system
   - [x] Add to database
-- [ ] Switch to serverside rendering (ejs)
+- [x] Switch to serverside rendering (ejs)
+- [ ] Emails
+- [x] Logging
 
 ## Frontend
 - [ ] Diagram rendering
+  - [x] Basic bar chart
+  - [ ] Advanced bar chart
+  - [ ] Pie chart
 - [ ] Create poll page
-- [ ] Voting
+- [x] Voting
