@@ -4,6 +4,7 @@ const session = require('express-session')
 const app = express()
 const path = require('path')
 const loggerMiddleware = require('./middleware/logger')
+const getUrlPrefix = require('./shared/functions/getUrlPrefix')
 
 // Load config
 const { config } = require('./shared/config')
@@ -42,7 +43,10 @@ app.use('/api', api)
 
 // Custom 404 and 500 error pages
 app.use((req, res) => {
-    res.status(404).render('error', { error: '404 Not found'})
+    res.status(404).render('error', { 
+        error: '404 Not found', 
+        urlPrefix: getUrlPrefix(req.originalUrl) 
+    })
 })
 
 // Start server
