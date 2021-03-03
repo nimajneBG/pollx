@@ -10,7 +10,7 @@
     "build-watch": "node-sass --watch --output-style=compressed src/static/scss -o src/static/css"
   },
   "author": "Benjamin",
-  "license": "GPL-3.0-or-later",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
