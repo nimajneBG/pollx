@@ -1,7 +1,12 @@
 let db = require('../../shared/db')
 const logger = require('./../../shared/logger')
 const getUrlPrefix = require('./../../shared/functions/getUrlPrefix')
+const { url } = require('../../shared/config').config
 
+
+exports.home = (req, res) => {
+    res.render('index', { url })
+}
 
 exports.poll = (req, res) => {
     if ( isNaN(req.params.id) )
@@ -24,6 +29,8 @@ exports.poll = (req, res) => {
 
             result.public = !!result.public
 
+            result.url = url
+
             res.render('poll', result)
         } else {
             res.status(404).render('error', { 
@@ -32,4 +39,8 @@ exports.poll = (req, res) => {
             })
         }
     })
+}
+
+exports.createPoll = (req, res) => {
+    res.render('create-poll')
 }

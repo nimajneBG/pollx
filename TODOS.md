@@ -24,3 +24,7 @@
 - [ ] Create poll page
 - [x] Voting
 - [ ] Switch to SASS/SCSS
+- [ ] Dashboards
+  - [ ] Admin
+  - [ ] User
+- [x] Use Open Graph meta tags

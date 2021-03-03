@@ -10,10 +10,17 @@
     <script src="../src/js/pop-up.js"></script>
     <script src="../src/js/chart.js"></script>
     <script src="../src/js/poll.js" defer></script>
-    <title>POLLX: <%= title %></title>
 
     <!--Meta-->
-    <meta name="description" content="Vote on <%= title %>! <%= description %>">
+    <title>POLLX: <%= title %></title>
+    <meta name="description" content="Vote on <%= title %>! &ndash; <%= description %>">
+    <meta property="og:title" content="POLLX: <%= title %>">
+    <meta property="og:description" content="Vote on <%= title %>! &ndash; <%= description %>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name", content="Pollx">
+    <% if (url) { %>
+        <meta property="og:image" content="<%= url %>logo.svg">
+    <% } %>
 
     <!-- Mainfest -->
     <link rel="manifest" href="/manifest.json">

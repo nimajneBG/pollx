@@ -5,16 +5,12 @@ const pages = require('./functions')
 
 
 // GET Home
-router.get('/', (req, res) => {
-    res.render('index', {test: 'Das ist ein Test'})
-})
+router.get('/', pages.home)
 
 // GET Poll
 router.get('/poll/:id', pages.poll)
 
 // GET Create poll
-router.get('/create-poll', (req, res) => {
-    res.render('create-poll')
-})
+router.get('/create-poll', pages.createPoll)
 
 module.exports = router
