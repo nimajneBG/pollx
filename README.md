@@ -33,7 +33,8 @@
             database: 'Name of the database'
         },
 
-        port    : 3000
+        port    : 3000,
+        url     : 'URL for Open Graph tags. Example: http://localhost/'
     }
 
 
