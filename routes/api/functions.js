@@ -54,6 +54,10 @@ exports.createPoll = (req, res) => {
 }
 
 exports.getResults = (req, res) => {
+    console.log(req.params)
+    if ( !req.params.id )
+        return res.sendStatus(400)
+
     if ( isNaN(req.params.id) )
         return res.sendStatus(400)
     
@@ -75,7 +79,7 @@ exports.getResults = (req, res) => {
             res.json(resultArray)
         } else {
             res.sendStatus(404)
-            logger.debug(`Tried to get results of non existent poll ID: ${id}`)
+            logger.debug(`Tried to get results of non existent poll ID: ${req.params.id}`)
         }
     })
 }
