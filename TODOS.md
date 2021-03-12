@@ -15,6 +15,7 @@
 - [ ] Emails
 - [x] Logging
 - [ ] Adding an expiration/finish date for polls
+- [ ] API for "recommended"/ramdom polls
 
 ## Frontend
 - [ ] Diagram rendering
@@ -28,3 +29,4 @@
   - [ ] Admin
   - [ ] User
 - [x] Use Open Graph meta tags
+- [ ] Display "recommended" polls
