@@ -1,0 +1,162 @@
+// Import colors
+@import "colors";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&family=Ubuntu:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+@import 'links-and-buttons';
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+    color: $text;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: $bg;
+}
+
+footer,
+header {
+    background-color: $fg;
+    padding: 12px;
+    z-index: 3;
+}
+
+.noscript {
+    z-index: 5;
+    background-color: $color8;
+    position: relative;
+    padding: 5px;
+    left: 0;
+    top: 0;
+}
+
+.noscript span {
+    color: $bg;
+    font-size: 18px;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+header a.company {
+    text-decoration: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+header .placeholder {
+    flex-grow: 1;
+}
+
+header h1 {
+    font-size: 36px;
+}
+
+header p,
+header input,
+header a.button {
+    font-size: 16px;
+}
+
+.pollx {
+    font-family: 'Roboto Slab', serif;
+}
+
+h2, figcaption {
+    font-size: 30px;
+}
+
+hr {
+    border: 1.5px solid $fg;
+    margin: 20px 0;
+}
+
+main {
+    margin: 87px 0 10px 0;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+}
+
+main .content {
+    max-width: 700px;
+    min-width: 75%;
+    text-align: center;
+}
+
+main .content div {
+    margin-bottom: 20px;
+}
+
+main .content div a.button {
+    margin: 20px;
+    display: inline-block;
+}
+
+.content h1.pollx {
+    font-size: 60px;
+}
+
+.polls-preview {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.polls-preview > *, .option > * {
+    margin: 10px 0 0 10px;
+}
+
+.poll-card {
+    background-color: $fg;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.poll-car-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid $text;
+    border-color: $text transparent $text transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@import 'media-rules'

@@ -1,0 +1,37 @@
+span.checkmark {
+    width: 22px;
+    height: 22px;
+    background-color: $fg;
+    border-radius: 50%;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input[type=radio],
+input[type=checkbox] {
+    width: 0;
+    height: 0;
+    display: none;
+}
+
+input[type=radio]:checked~.checkmark::before,
+input[type=checkbox]:checked~.checkmark::before {
+    content: "";
+    width: 60%;
+    height: 60%;
+    background-color: $color2;
+    position: absolute;
+    border-radius: 50%;
+}
+
+input[type=text],
+input[type=email],
+textarea {
+    padding: 10px;
+    color: $text;
+    border: 1px solid $bg;
+    border-radius: 4px;
+    outline: none;
+}

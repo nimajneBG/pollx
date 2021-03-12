@@ -1,0 +1,68 @@
+@import 'colors';
+
+/* Color elements */
+span.color0,
+span.color1,
+span.color2,
+span.color3,
+span.color4,
+span.color5,
+span.color6,
+span.color7,
+span.color8,
+span.color9 {
+    display: inline-block;
+    width: 1.3em;
+    height: 1.3em;
+    border: 4px solid $fg;
+}
+
+.color0 {
+    fill: $color0;
+    background-color: $color0;
+}
+
+.color1 {
+    fill: $color1;
+    background-color: $color1;
+}
+
+.color2 {
+    fill: $color2;
+    background-color: $color2;
+}
+
+.color3 {
+    fill: $color3;
+    background-color: $color3;
+}
+
+.color4 {
+    fill: $color4;
+    background-color: $color4;
+}
+
+.color5 {
+    fill: $color5;
+    background-color: $color5;
+}
+
+.color6 {
+    fill: $color6;
+    background-color: $color6;
+}
+
+.color7 {
+    fill: $color7;
+    background-color: $color7;
+}
+
+.color8 {
+    fill: $color8;
+    background-color: $color8;
+}
+
+.color9 {
+    fill: $color9;
+    background-color: $color9;
+}
