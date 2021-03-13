@@ -94,5 +94,6 @@ class Poll {
 let poll = new Poll
 
 document.body.onload = () => {
+    displayRandomPolls()
     poll.checkVoted()
 }

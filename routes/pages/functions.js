@@ -1,18 +1,17 @@
 let db = require('../../shared/db')
 const logger = require('./../../shared/logger')
-const getUrlPrefix = require('./../../shared/functions/getUrlPrefix')
 const { url } = require('../../shared/config').config
 
 
 exports.home = (req, res) => {
-    res.render('index', { url })
+    res.render('index', { url, urlPrefix: '' })
 }
 
 exports.poll = (req, res) => {
     if ( isNaN(req.params.id) )
         return res.status(400).render('error', { 
             error: 'Invalid Id',
-            urlPrefix: getUrlPrefix(req.originalUrl)
+            urlPrefix: './../'
         })
 
     db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
@@ -21,7 +20,7 @@ exports.poll = (req, res) => {
             logger.mysql(err.message)
             res.status(500).render('error', { 
                 error : 'Something went wrong',
-                urlPrefix: getUrlPrefix(req.originalUrl)
+                urlPrefix: './../'
             })
         } else if (result.length > 0) {
             result = result[0]
@@ -31,11 +30,13 @@ exports.poll = (req, res) => {
 
             result.url = url
 
+            result.urlPrefix = './../'
+
             res.render('poll', result)
         } else {
             res.status(404).render('error', { 
                 error: 'No poll with this id',
-                urlPrefix: getUrlPrefix(req.originalUrl)
+                urlPrefix: './../'
             })
         }
     })

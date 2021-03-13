@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/home.css">
+    <script src="src/js/base.js" defer></script>
 
     <meta name="description" content="You can't decide whether to wear pink or blue, which PC to buy or what to eat? With this website your friends and other people on the internet can decide for you!">
     <title>POLLX: Free online polls</title>
@@ -25,6 +26,11 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <script>
+        // Getting urlPrefix passed through
+        const urlPrefix = '<%= urlPrefix %>';
+    </script>
 </head>
 
 <body>
@@ -52,39 +58,25 @@
 
             <div>
                 <h3 class="pollx">Some polls you can vote on:</h3>
-                <div class="polls-preview">
-                    <div class="poll-card">
-                        <p class="poll-car-title pollx">Lorem ipsum dolor?</p>
-                        <p class="poll-card-description">sit amet consectetur adipisicing elit. Facere quia ea
-                            molestiae hic labore doloribus ratione accusamus exercitationem</p>
+                <div class="polls-preview" id="polls-preview">
+                    <div class="spinner-container" id="preview-spinner-container">
+                        <div class="lds-dual-ring" id="preview-spinner"></div>
+                        <p class="spinner-text">Loading...</p>
                     </div>
-
-                    <div class="poll-card">
-                        <p class="poll-car-title pollx">Lorem ipsum dolor?</p>
-                        <p class="poll-card-description">sit amet consectetur adipisicing elit. Facere quia ea
-                            molestiae hic labore doloribus ratione accusamus exercitationem</p>
-                    </div>
-
-                    <div class="poll-card">
-                        <p class="poll-car-title pollx">Lorem ipsum dolor?</p>
-                        <p class="poll-card-description">sit amet consectetur adipisicing elit. Facere quia ea
-                            molestiae hic labore doloribus ratione accusamus exercitationem</p>
-                    </div>
-
-                    <div class="poll-card">
-                        <p class="poll-car-title pollx">Lorem ipsum dolor?</p>
-                        <p class="poll-card-description">sit amet consectetur adipisicing elit. Facere quia ea
-                            molestiae hic labore doloribus ratione accusamus exercitationem</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facere quia ea molestiae hic labore doloribus ratione
-        accusamus exercitationem, officia est incidunt earum et, non nam dolorem quisquam, praesentium laboriosam nobis. -->
     </main>
 
     <%- include('modules/footer') %>
+
+    <script>
+        document.body.onload = () => {
+            displayRandomPolls()
+        }
+    </script>
 </body>
 
 </html>

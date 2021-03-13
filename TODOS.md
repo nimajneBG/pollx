@@ -35,5 +35,5 @@
   - [ ] Admin
   - [ ] User
 - [x] Use Open Graph meta tags
-- [ ] Display "recommended" polls
+- [x] Display "recommended"/random polls
 - [ ] Searchbar

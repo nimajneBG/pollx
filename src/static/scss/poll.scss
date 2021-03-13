@@ -11,7 +11,7 @@ main div.content div.poll, .chart-description {
     display: none;
 }
 
-.spinner-container {
+#spinner-container {
     display: none;
     margin-top: 100px;
 }
@@ -82,4 +82,8 @@ svg {
     div.charts {
         flex-direction: column;
     }
+}
+
+#preview-spinner-container {
+    margin: 0 auto;
 }

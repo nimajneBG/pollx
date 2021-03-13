@@ -25,13 +25,3 @@ input[type=checkbox]:checked~.checkmark::before {
     position: absolute;
     border-radius: 50%;
 }
-
-input[type=text],
-input[type=email],
-textarea {
-    padding: 10px;
-    color: $text;
-    border: 1px solid $bg;
-    border-radius: 4px;
-    outline: none;
-}

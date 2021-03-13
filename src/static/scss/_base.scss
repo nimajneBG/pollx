@@ -90,7 +90,7 @@ hr {
 }
 
 main {
-    padding: 111px 25px 25px 25px;
+    padding: 111px 25px 65px 25px;
     display: flex;
     justify-content: center;
     font-size: 18px;
@@ -102,7 +102,7 @@ main .content {
     text-align: center;
 }
 
-main .content div {
+main .content > div {
     margin-bottom: 20px;
 }
 
@@ -122,19 +122,27 @@ main .content div a.button {
     gap: 10px;
 }
 
-.polls-preview > *, .option > * {
-    margin: 10px 0 0 10px;
-}
-
 .poll-card {
     background-color: $fg;
     padding: 10px;
     border-radius: 4px;
+    text-decoration: none;
+    flex-grow: 1;
 }
 
 .poll-car-title {
     margin-bottom: 10px;
     font-size: 18px;
+}
+
+input[type=text],
+input[type=email],
+textarea {
+    padding: 10px;
+    color: $text;
+    border: 1px solid $bg;
+    border-radius: 4px;
+    outline: none;
 }
 
 .lds-dual-ring {

@@ -8,6 +8,7 @@
     <script src="../src/js/pop-up.js"></script>
     <script src="../src/js/chart.js"></script>
     <script src="../src/js/poll.js" defer></script>
+    <script src="../src/js/base.js" defer></script>
 
     <!--Meta-->
     <title>POLLX: <%= title %></title>
@@ -29,8 +30,9 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <script>
-        // Getting id passed through
+        // Getting id and urlPrefix passed through
         const id = <%= id %>;
+        const urlPrefix = '<%= urlPrefix %>';
     </script>
 </head>
 
@@ -76,6 +78,20 @@
                     </div>
                 </figure>
             </div>
+
+            <hr>
+
+            <div>
+                <h3 class="pollx">Some polls you can vote on:</h3>
+                <div class="polls-preview" id="polls-preview">
+                    <div class="spinner-container" id="preview-spinner-container">
+                        <div class="lds-dual-ring" id="preview-spinner"></div>
+                        <p class="spinner-text">Loading...</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </main>
 
