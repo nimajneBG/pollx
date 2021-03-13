@@ -19,7 +19,7 @@
 - [ ] Emails
 - [x] Logging
 - [ ] Adding an expiration/finish date for polls
-- [ ] API for "recommended"/ramdom polls
+- [x] API for "recommended"/ramdom polls
 - [ ] Searchbar (api)
 - [ ] Add support for https
 

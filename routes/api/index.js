@@ -7,6 +7,9 @@ const api = require('./functions')
 // GET Poll results
 router.get('/results/:id', api.getResults)
 
+// GET Random polls for preview
+router.get('/random', api.getRandomPolls)
+
 // POST Vote
 router.post('/vote/:id', api.vote)
 

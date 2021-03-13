@@ -1,4 +1,3 @@
-// const { query } = require('express')
 const isValidEmail = require('../../shared/functions/isValidEmail')
 let db = require('../../shared/db')
 const logger = require('../../shared/logger')
@@ -54,7 +53,6 @@ exports.createPoll = (req, res) => {
 }
 
 exports.getResults = (req, res) => {
-    console.log(req.params)
     if ( !req.params.id )
         return res.sendStatus(400)
 
@@ -138,5 +136,23 @@ exports.vote = (req, res) => {
         } else {
             res.sendStatus(404)
         }
+    })
+}
+
+exports.getRandomPolls = (req, res) => {
+    const max = req.body.max || 4
+
+    if (typeof max !== 'number')
+        return res.sendStatus(400)
+
+    db.query('SELECT title, description, id FROM polls WHERE public=1 ORDER BY RAND() LIMIT ?', [ max ], (err, result) => {
+        if ( err ) {
+            logger.mysql(err.message)
+            res.send(500)
+        } else {
+            console.log(result)
+            res.json(result)
+        }
+
     })
 }
