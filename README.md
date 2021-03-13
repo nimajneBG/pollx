@@ -41,7 +41,11 @@
     exports.config = config
    ```
    If you use the `setup.sql` file the database name should be `pollx`
-5. Start it
+5. Build the CSS
+   ```shell
+   $ npm run build
+   ```
+6. Start it
    ```shell
    $ npm run start
    ```

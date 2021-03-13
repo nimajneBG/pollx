@@ -150,7 +150,6 @@ exports.getRandomPolls = (req, res) => {
             logger.mysql(err.message)
             res.send(500)
         } else {
-            console.log(result)
             res.json(result)
         }
 
