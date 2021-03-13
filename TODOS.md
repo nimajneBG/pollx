@@ -11,11 +11,17 @@
 - [x] Get Results (api)
 - [ ] Login/user system
   - [x] Add to database
+  - [ ] Login
+  - [ ] Save user data (voted polls, own polls etc.)
+  - [ ] Logout
+  - [ ] Create new users
 - [x] Switch to serverside rendering (ejs)
 - [ ] Emails
 - [x] Logging
 - [ ] Adding an expiration/finish date for polls
 - [ ] API for "recommended"/ramdom polls
+- [ ] Searchbar (api)
+- [ ] Add support for https
 
 ## Frontend
 - [ ] Diagram rendering
@@ -30,3 +36,4 @@
   - [ ] User
 - [x] Use Open Graph meta tags
 - [ ] Display "recommended" polls
+- [ ] Searchbar
