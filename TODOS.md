@@ -37,3 +37,4 @@
 - [x] Use Open Graph meta tags
 - [x] Display "recommended"/random polls
 - [ ] Searchbar
+- [ ] Share button for polls

@@ -39,6 +39,9 @@ class Poll {
         // Loading results
         await this.getResults()
 
+        // Set voted class for the CSS
+        document.getElementsByClassName('poll-and-result-container')[0].classList.add('voted')
+
         // Render diagram
         this.diagram = new Chart(this.results)
         this.diagram.create()

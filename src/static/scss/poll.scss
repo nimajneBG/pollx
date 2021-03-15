@@ -9,6 +9,7 @@ main div.content div.poll, .chart-description {
 
 .result {
     display: none;
+    padding-top: 40px;
 }
 
 #spinner-container {
@@ -21,23 +22,12 @@ main div.content div.poll, .chart-description {
     margin-top: 20px;
 }
 
-.msg-container {
-    display: none;
-    justify-content: center;
-}
-
-.poll {
-    margin-top: 25px;
-}
-
 .option {
     display: flex;
     align-items: center;
     flex-direction: row;
-}
-
-.option > * {
-    margin: 10px 0 0 10px;
+    gap: 10px;
+    margin: 25px 0;
 }
 
 circle {
@@ -53,18 +43,24 @@ svg {
     display: block;
 }
 
+.poll-and-result-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.poll-and-result-container > * {
+    flex-grow: 1;
+}
+
 .chart {
     width: 100%;
     max-height: 500px;
 }
 
-div.charts {
+.charts {
     display: flex;
     flex-direction: row;
-}
-
-.charts > * {
-    margin: 20px 0 0 20px;
+    gap: 20px;
 }
 
 .chart-description {
@@ -78,8 +74,40 @@ svg {
     margin: 20px 0;
 }
 
-@media only screen and (max-width: 600px) {
-    div.charts {
+.description, .title {
+    text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+    .charts {
+        flex-direction: column;
+    }
+
+    .result {
+        padding-top: 20px;
+        border-top: 1px solid $fg;
+    }
+
+    .voted .poll {
+        padding-bottom: 20px;
+        border-bottom: 1px solid $fg;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .result {
+        padding-right: 20px;
+        border-right: 1px solid $fg;
+    }
+
+    .poll {
+        padding-left: 20px;
+        border-left: 1px solid $fg;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .poll-and-result-container {
         flex-direction: column;
     }
 }
