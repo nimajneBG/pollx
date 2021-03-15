@@ -26,7 +26,7 @@ exports.createPoll = (req, res) => {
         "email": email
     }
     
-    db.query('INSERT INTO polls SET ?', queryValuesPoll, (err, result) => {
+    db.execute('INSERT INTO polls SET ?', queryValuesPoll, (err, result) => {
         if ( err ) {
             logger.mysql(err.message)
             res.sendStatus(500)
@@ -39,7 +39,7 @@ exports.createPoll = (req, res) => {
                 queryValuesResults[`opt${i}`] = 0
             }
         
-            db.query('INSERT INTO results SET ?', queryValuesResults, (err2, result2) => {
+            db.execute('INSERT INTO results SET ?', queryValuesResults, (err2, result2) => {
                 if ( err2 ) {
                     logger.mysql(err2.message)
                     res.send(500)
@@ -59,7 +59,7 @@ exports.getResults = (req, res) => {
     if ( isNaN(req.params.id) )
         return res.sendStatus(400)
     
-    db.query('SELECT * FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
+    db.execute('SELECT * FROM results WHERE poll_id = ?', [req.params.id], (err, result) => {
         if ( err ) {
             logger.mysql(err.message)
             res.sendStatus(500)
@@ -113,7 +113,7 @@ exports.vote = (req, res) => {
             return res.json({ msg: 'Already voted on this poll'})
     }
 
-    db.query('SELECT answers FROM polls WHERE id = ?', [id], (err, result) => {
+    db.execute('SELECT answers FROM polls WHERE id = ?', [id], (err, result) => {
         if ( err ) {
             logger.mysql(err.message)
             res.sendStatus(500)
@@ -123,7 +123,7 @@ exports.vote = (req, res) => {
             const answersLength = JSON.parse(result.answers).length
 
             if ( answersLength > option ) {
-                db.query('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, id], (err2, result2) => {
+                db.execute('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option, id], (err2, result2) => {
                     if (err2) {
                         logger.mysql(err2.message)
                         res.sendStatus(500)
@@ -145,7 +145,7 @@ exports.getRandomPolls = (req, res) => {
     if (typeof max !== 'number')
         return res.sendStatus(400)
 
-    db.query('SELECT title, description, id FROM polls WHERE public=1 ORDER BY RAND() LIMIT ?', [ max ], (err, result) => {
+    db.execute('SELECT title, description, id FROM polls WHERE public=1 ORDER BY RAND() LIMIT ?', [ max ], (err, result) => {
         if ( err ) {
             logger.mysql(err.message)
             res.send(500)

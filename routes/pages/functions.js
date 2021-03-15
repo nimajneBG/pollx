@@ -14,7 +14,7 @@ exports.poll = (req, res) => {
             urlPrefix: './../'
         })
 
-    db.query('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
+    db.execute('SELECT * FROM polls WHERE id = ?', [req.params.id], (err, result) => {
         // Error handeling
         if (err) {
             logger.mysql(err.message)
