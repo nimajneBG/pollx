@@ -3,18 +3,14 @@
 @import 'inputs';
 @import 'pop-up';
 
-main div.content div.poll, .chart-description {
+div.poll,
+.chart-description {
     text-align: left;
 }
 
 .result {
     display: none;
     padding-top: 40px;
-}
-
-#spinner-container {
-    display: none;
-    margin-top: 100px;
 }
 
 .spinner-text {
@@ -30,26 +26,17 @@ main div.content div.poll, .chart-description {
     margin: 25px 0;
 }
 
-circle {
-    fill: transparent;
-    stroke: cadetblue;
-    stroke-width: 50;
-    stroke-dasharray: 30 158;
-    transition: stroke-dasharray .3s ease;
-}
-
 svg {
-    background: #ddd;
+    background: $diagrammBg;
     display: block;
+    margin-top: 20px;
 }
 
 .poll-and-result-container {
     display: flex;
     flex-direction: row;
-}
 
-.poll-and-result-container > * {
-    flex-grow: 1;
+    & > * { flex-grow: 1; }
 }
 
 .chart {
@@ -70,11 +57,8 @@ svg {
     justify-content: center;
 }
 
-svg {
-    margin: 20px 0;
-}
-
-.description, .title {
+.description,
+.title {
     text-align: center;
 }
 
@@ -83,33 +67,35 @@ svg {
         flex-direction: column;
     }
 
-    .result {
-        padding-top: 20px;
-        border-top: 1px solid $fg;
-    }
+    .voted {
+        .poll {
+            padding-bottom: 20px;
+            border-bottom: $hrBorderWidth solid $fg;
+        }
 
-    .voted .poll {
-        padding-bottom: 20px;
-        border-bottom: 1px solid $fg;
+        .result {
+            padding-top: 20px;
+            border-top: $hrBorderWidth solid $fg;
+        }
     }
 }
 
 @media only screen and (min-width: 1200px) {
-    .result {
-        padding-right: 20px;
-        border-right: 1px solid $fg;
-    }
+    .voted {
+        .poll {
+            padding-right: 20px;
+            border-right: $hrBorderWidth solid $fg;
+        }
 
-    .poll {
-        padding-left: 20px;
-        border-left: 1px solid $fg;
+        .result {
+            padding-left: 20px;
+            border-left: $hrBorderWidth solid $fg;
+        }
     }
 }
 
 @media only screen and (max-width: 1200px) {
-    .poll-and-result-container {
-        flex-direction: column;
-    }
+    .poll-and-result-container { flex-direction: column; }
 }
 
 #preview-spinner-container {

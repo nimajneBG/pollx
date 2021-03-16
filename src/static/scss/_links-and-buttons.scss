@@ -7,10 +7,9 @@ button {
     border: 1px solid $color1;
     border-radius: 4px;
     cursor: pointer;
-}
 
-a.button.disabled,
-button.disabled {
-    background-color: $disabled;
-    border-color: $disabled;
+    &.disabled {
+        background-color: $disabled;
+        border-color: $disabled;
+    }
 }

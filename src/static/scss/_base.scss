@@ -1,20 +1,19 @@
 // Import colors
-@import "colors";
+@import 'colors';
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@600&family=Ubuntu:ital,wght@0,400;0,500;1,400;1,500&display=swap');
+
+@import 'reset';
 
 @import 'links-and-buttons';
 
 // Font awesome 
-@import "../../../node_modules/\@fortawesome/fontawesome-free/scss/fontawesome.scss";
-@import "../../../node_modules/\@fortawesome/fontawesome-free/scss/fa-solid.scss";
+@import '../../../node_modules/\@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../node_modules/\@fortawesome/fontawesome-free/scss/fa-solid.scss';
 
 * {
-    margin: 0;
-    padding: 0;
     font-family: 'Ubuntu', sans-serif;
     color: $text;
-    box-sizing: border-box;
 }
 
 body {
@@ -39,14 +38,10 @@ footer {
     z-index: 5;
     background-color: $color8;
     position: relative;
-    padding: 5px;
+    padding: 10px 20px;
     left: 0;
     top: 0;
-}
-
-.noscript span {
-    color: $bg;
-    font-size: 18px;
+    span { color: $fg; }
 }
 
 header {
@@ -57,39 +52,43 @@ header {
     top: 0;
     left: 0;
     width: 100%;
+
+    span {
+        color: $bg;
+        font-size: 18px;
+    }
+
+    a.company {
+        text-decoration: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+    }
+
+    h1 {
+        font-size: 36px;
+    }
+
+    .placeholder {
+        flex-grow: 1;
+    }
+
+    p,
+    input,
+    a.button {
+        font-size: 16px;
+    }
 }
 
-header a.company {
-    text-decoration: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-}
+.pollx { font-family: 'Roboto Slab', serif; }
 
-header .placeholder {
-    flex-grow: 1;
-}
-
-header h1 {
-    font-size: 36px;
-}
-
-header p,
-header input,
-header a.button {
-    font-size: 16px;
-}
-
-.pollx {
-    font-family: 'Roboto Slab', serif;
-}
-
-h2, figcaption {
+h2,
+figcaption {
     font-size: 30px;
 }
 
 hr {
-    border: 1.5px solid $fg;
+    border: $hrBorderWidth solid $fg;
     margin: 20px 0;
 }
 
@@ -100,23 +99,19 @@ main {
     font-size: 18px;
 }
 
-main .content {
+.content {
     max-width: 700px;
     min-width: 75%;
     text-align: center;
-}
 
-main .content > div {
-    margin-bottom: 20px;
-}
+    & > div { margin-bottom: 20px; }
 
-main .content div a.button {
-    margin: 20px;
-    display: inline-block;
-}
+    div a.button {
+        margin: 20px;
+        display: inline-block;
+    }
 
-.content h1.pollx {
-    font-size: 60px;
+    h1.pollx { font-size: 60px; }
 }
 
 .polls-preview {
@@ -134,9 +129,9 @@ main .content div a.button {
     flex-grow: 1;
 }
 
-.poll-car-title {
+.poll-card-title {
     margin-bottom: 10px;
-    font-size: 18px;
+    font-size: 20px;
 }
 
 input[type=text],
@@ -153,18 +148,18 @@ textarea {
     display: inline-block;
     width: 80px;
     height: 80px;
-}
 
-.lds-dual-ring:after {
-    content: " ";
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border-radius: 50%;
-    border: 6px solid $text;
-    border-color: $text transparent $text transparent;
-    animation: lds-dual-ring 1.2s linear infinite;
+    &:after {
+        content: ' ';
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid $text;
+        border-color: $text transparent $text transparent;
+        animation: lds-dual-ring 1.2s linear infinite;
+    }
 }
 
 @keyframes lds-dual-ring {

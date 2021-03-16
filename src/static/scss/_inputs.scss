@@ -14,14 +14,14 @@ input[type=checkbox] {
     width: 0;
     height: 0;
     display: none;
-}
 
-input[type=radio]:checked~.checkmark::before,
-input[type=checkbox]:checked~.checkmark::before {
-    content: "";
-    width: 60%;
-    height: 60%;
-    background-color: $color2;
-    position: absolute;
-    border-radius: 50%;
+    &:checked~.checkmark::before,
+    &:checked~.checkmark::before {
+        content: "";
+        width: 60%;
+        height: 60%;
+        background-color: $color2;
+        position: absolute;
+        border-radius: 50%;
+    }
 }
