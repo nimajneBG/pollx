@@ -5,6 +5,10 @@
 
 @import 'links-and-buttons';
 
+// Font awesome 
+@import "../../../node_modules/\@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "../../../node_modules/\@fortawesome/fontawesome-free/scss/fa-solid.scss";
+
 * {
     margin: 0;
     padding: 0;

@@ -12,6 +12,7 @@
   "author": "Benjamin",
   "license": "MIT",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.1.0-9",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.5",

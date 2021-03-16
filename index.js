@@ -38,6 +38,9 @@ app.use('/', express.static(path.join(__dirname + '/src/logo')))
 // Manifest
 app.use('/', express.static(path.join(__dirname + '/src/config')))
 
+// Font awesome
+app.use('/src/webfonts', express.static(path.join(__dirname + '/node_modules/\@fortawesome/fontawesome-free/webfonts')))
+
 // API
 app.use('/api', api)
 
