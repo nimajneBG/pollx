@@ -2,7 +2,7 @@ node_modules/
 cert/
 .vscode/
 *.rest
-shared/config.js
+.env
 old/
 *.log
 src/static/css/*

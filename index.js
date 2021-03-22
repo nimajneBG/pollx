@@ -6,8 +6,8 @@ const path = require('path')
 const loggerMiddleware = require('./middleware/logger')
 const getUrlPrefix = require('./shared/functions/getUrlPrefix')
 
-// Load config
-const { config } = require('./shared/config')
+// Init dotenv
+require('dotenv').config()
 
 // Import routes
 const pages = require('./routes/pages')
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
 app.use(cookieParser())                         // Use cookie parser
 app.set('view engine', 'ejs')                   // Use ejs for rendering
-app.use(session({ secret: config.secret }))    // Init and use sessions
+app.use(session({ secret: process.env.SECRET }))    // Init and use sessions
 
 // Frontend
 
@@ -53,7 +53,8 @@ app.use((req, res) => {
 })
 
 // Start server
-app.listen(config.port, () => {
+const port = process.env.PORT || 3000
+app.listen(port, () => {
     console.log(`
  _______         __   __           
 |_   __ \\       [  | [  |          
@@ -63,5 +64,5 @@ app.listen(config.port, () => {
 |_____|   '.__.'[___][___][__]\`\\_] 
 
     `)
-    console.log(`... running at http://localhost:${config.port}\n\n`)
+    console.log(`... running at http://localhost:${port}\n\n`)
 })
