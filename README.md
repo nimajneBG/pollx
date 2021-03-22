@@ -21,26 +21,18 @@
    ```shell
    $ npm i
    ```
-4. Create `config.js` in `shared`
+4. Create `.env`
 
-   Example (also in `shared/config-example.js`):
-   ```js
-    const config = {
-        db      : {
-            host: 'SQL-Server adress',
-            user: 'SQL-Server user',
-            password: 'Password for the user',
-            database: 'Name of the database'
-        },
-
-        port    : 3000,
-        url     : 'URL for Open Graph tags. Example: http://localhost/'
-    }
-
-
-    exports.config = config
+   Example (also in `.env.example`):
+   ```txt
+   PORT = The port the server should run on (default: 3000)
+   SECRET = The secret for the cookies
+   DB_HOST = The adress of your mysql server (default: localhost)
+   DB_USER = Your DB User (default: root)
+   DB_PASSWORD = Your DB Password
+   URL = The public URL of your app
+   DB_MAX_CONNECTIONS = Max number of connections in the poll (default: 10)
    ```
-   If you use the `setup.sql` file the database name should be `pollx`
 5. Build the CSS
    ```shell
    $ npm run build
