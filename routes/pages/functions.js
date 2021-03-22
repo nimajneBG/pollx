@@ -51,3 +51,36 @@ exports.poll = (req, res) => {
 exports.createPoll = (req, res) => {
     res.render('create-poll')
 }
+
+exports.search = (req, res) => {
+    if ( req.query.q ) {
+        const q = `%${req.query.q}%`
+        db.execute(
+            'SELECT title, description, id FROM polls WHERE ((title LIKE ?) OR (description LIKE ?)) AND public=1',
+            [ q, q ],
+            (err, result) => {
+                if ( err ) {
+                    logger.mysql(err.message)
+                    res.status(500).render('error', {
+                        error: 'Something went wrong',
+                        urlPrefix: ''
+                    })
+                } else {
+                    console.log(result)
+                    res.render('search', {
+                        url: process.env.URL,
+                        urlPrefix: '',
+                        title: 'Test',
+                        result
+                    })
+                }
+            }
+        )
+    } else {
+        res.render('search', {
+            url: process.env.URL,
+            urlPrefix: '',
+            title: 'Test',
+        })
+    }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<%= urlPrefix %>src/css/search.css">
+    
+    <!--Meta-->
+    <title>POLLX: Search for <%= title %></title>
+    <meta name="description" content="Results for <%= title %>">
+    <meta property="og:title" content="POLLX: Search for <%= title %>">
+    <meta property="og:description" content="Results for <%= title %>">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pollx">
+    <% if (url) { %>
+        <meta property="og:image" content="<%= url %>logo.svg">
+    <% } %>
+
+    <!-- Mainfest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+</head>
+
+<body>
+    <%- include('modules/header') %>
+
+    <main>
+        <div class="content">
+            <div>
+                <h1 class="pollx">Search:</h1>
+                <input type="text">
+            </div>
+        </div>
+
+    </main>
+
+    <%- include('modules/footer') %>
+</body>
+
+</html>

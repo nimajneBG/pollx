@@ -13,4 +13,7 @@ router.get('/poll/:id', pages.poll)
 // GET Create poll
 router.get('/create-poll', pages.createPoll)
 
+// GET Search
+router.get('/search', pages.search)
+
 module.exports = router

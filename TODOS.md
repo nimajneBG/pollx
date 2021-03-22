@@ -20,7 +20,7 @@
 - [x] Logging
 - [ ] Adding an expiration/finish date for polls
 - [x] API for "recommended"/ramdom polls
-- [ ] Searchbar (api)
+- [x] Searchbar (api)
 - [ ] Add support for https
 
 ## Frontend
