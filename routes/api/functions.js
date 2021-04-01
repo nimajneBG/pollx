@@ -8,7 +8,7 @@ exports.createPoll = (req, res) => {
     const {
         title,
         description,
-        public,
+        publicStatus,
         email
     } = req.body
 
@@ -21,7 +21,7 @@ exports.createPoll = (req, res) => {
     if (
         title == undefined ||
         description == undefined ||
-        public == undefined ||
+        publicStatus == undefined ||
         answers == undefined ||
         email == undefined
     )
@@ -30,7 +30,7 @@ exports.createPoll = (req, res) => {
     if (
         typeof title !== 'string' ||
         typeof description !== 'string' ||
-        typeof public !== 'boolean' ||
+        typeof publicStatus !== 'boolean' ||
         !Array.isArray(answers) ||
         !isValidEmail(email)
     )
@@ -38,7 +38,7 @@ exports.createPoll = (req, res) => {
 
     db.execute(
         'INSERT INTO polls (title, description, public, answers, email) VALUES (?, ?, ?, ?, ?)',
-        [title, description, public, JSON.stringify(answers), email],
+        [title, description, publicStatus, JSON.stringify(answers), email],
         (err, result) => {
             if (err) {
                 logger.mysql(err.message)
@@ -108,7 +108,9 @@ exports.getResults = (req, res) => {
 }
 
 exports.vote = (req, res) => {
-    const { option } = req.body
+    const {
+        option
+    } = req.body
 
     if (option == undefined)
         return res.sendStatus(400)
@@ -116,10 +118,7 @@ exports.vote = (req, res) => {
     if (typeof option !== 'number')
         return res.sendStatus(400)
 
-    if (option < 0)
-        return res.sendStatus(400)
-
-    if (option > 9)
+    if (option < 0 || option > 9)
         return res.sendStatus(400)
 
     if (isNaN(req.params.id))
@@ -145,7 +144,7 @@ exports.vote = (req, res) => {
     db.execute('SELECT answers FROM polls WHERE id = ?', [id], (err, result) => {
         if (err) {
             logger.mysql(err.message)
-            res.sendStatus(500)
+            res.sendStatus(502)
         } else if (result.length > 0) {
             result = result[0]
 
@@ -153,12 +152,15 @@ exports.vote = (req, res) => {
 
             if (answersLength > option) {
                 let x = db.execute(
-                    format('UPDATE results SET opt? = opt?+1 WHERE poll_id = ?', [option, option]),
+                    format(
+                        'UPDATE results SET opt? = opt?+1 WHERE poll_id = ?',
+                        [option, option]
+                    ),
                     [id],
                     (err2, result2) => {
                         if (err2) {
                             logger.mysql(err2.message)
-                            res.sendStatus(500)
+                            res.sendStatus(501)
                         } else {
                             voted_polls.push(id)
                             res.clearCookie('voted_polls')
@@ -175,9 +177,9 @@ exports.vote = (req, res) => {
 }
 
 exports.getRandomPolls = (req, res) => {
-    const max = req.body.max || 4
+    const max = req.params.max || 4
 
-    if (typeof max !== 'number')
+    if (isNaN(max))
         return res.sendStatus(400)
 
     db.execute(
