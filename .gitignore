@@ -6,3 +6,4 @@ cert/
 old/
 *.log
 src/static/css/*
+coverage/
