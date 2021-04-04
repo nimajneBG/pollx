@@ -38,3 +38,13 @@
 - [x] Display "recommended"/random polls
 - [ ] Searchbar
 - [ ] Share button for polls
+
+## Unit Tests
+
+- [ ] API Endpoints
+  - [x] Vote
+  - [ ] Random polls
+  - [ ] Results
+  - [ ] Create
+- [x] Functions
+  - [x] `getUrlPrefix()`
