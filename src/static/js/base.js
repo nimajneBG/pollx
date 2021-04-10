@@ -14,7 +14,7 @@ async function displayRandomPolls () {
     for (let i = 0; i < data.length; i++) {
         let card = document.createElement('A')
         card.classList = 'poll-card'
-        card.setAttribute('href', data[i].id)
+        card.setAttribute('href', `/poll/${data[i].id}`)
 
         let title = document.createElement('P')
         title.classList = 'poll-card-title pollx'
