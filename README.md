@@ -24,14 +24,15 @@
 4. Create `.env`
 
    Example (also in `.env.example`):
-   ```txt
-   PORT = The port the server should run on (default: 3000)
-   SECRET = The secret for the cookies
-   DB_HOST = The adress of your mysql server (default: localhost)
-   DB_USER = Your DB User (default: root)
-   DB_PASSWORD = Your DB Password
-   URL = The public URL of your app
-   DB_MAX_CONNECTIONS = Max number of connections in the poll (default: 10)
+   ```sh
+   PORT =                  # The port the server should run on (default: 3000)
+   SECRET =                # The secret for the cookies
+   DB_HOST =               # The adress of your mysql server (default: localhost)
+   DB_USER =               # Your DB User (default: root)
+   DB_PASSWORD =           # Your DB Password
+   URL =                   # The public URL of your app
+   DB_MAX_CONNECTIONS =    # Max number of connections in the poll (default: 10)
+   SESSION_MAX_AGE =       # The max age of the session cookie in hours (default 3d -> 72h)
    ```
 5. Build the CSS
    ```shell

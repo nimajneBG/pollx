@@ -3,7 +3,9 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const app = express()
 const path = require('path')
+
 const loggerMiddleware = require('./middleware/logger')
+const authMiddleware = require('./middleware/auth')
 const getUrlPrefix = require('./shared/functions/getUrlPrefix')
 
 // Init dotenv
@@ -19,7 +21,21 @@ app.use(express.urlencoded({ extended : false }))
 app.use(express.json())
 app.use(cookieParser())                         // Use cookie parser
 app.set('view engine', 'ejs')                   // Use ejs for rendering
-app.use(session({ secret: process.env.SECRET }))    // Init and use sessions
+
+// Init and use sessions
+app.use(
+    session({
+        name: 'sid',
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            // Max age of the cookie (default 3 days)
+            maxAge: (process.env.SESSION_MAX_AGE || 72) * 1000 * 60 * 60,
+            sameSite: true
+        }
+    })
+)
 
 // Frontend
 
@@ -39,14 +55,17 @@ app.use('/', express.static(path.join(__dirname + '/src/logo')))
 app.use('/', express.static(path.join(__dirname + '/src/config')))
 
 // Font awesome
-app.use('/src/webfonts', express.static(path.join(__dirname + '/node_modules/\@fortawesome/fontawesome-free/webfonts')))
+// Serves the webfont part of fontawesome from its folder in node_modules. 
+// The CSS part is included by the scss but the webfont is needed for it to function
+app.use('/src/webfonts', express.static(
+    path.join(__dirname + '/node_modules/\@fortawesome/fontawesome-free/webfonts')
+))
 
 // API
 app.use('/api', api)
 
 // Custom 404 and 500 error pages
 app.use((req, res) => {
-    console.log(req.originalUrl)
     res.status(404).render('error', { 
         error: '404 Not found', 
         urlPrefix: getUrlPrefix(req.originalUrl) 

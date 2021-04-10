@@ -164,7 +164,11 @@ exports.vote = (req, res) => {
                         } else {
                             voted_polls.push(id)
                             res.clearCookie('voted_polls')
-                                .cookie('voted_polls', JSON.stringify(voted_polls))
+                                .cookie(
+                                    'voted_polls', 
+                                    JSON.stringify(voted_polls), 
+                                    { maxAge: 3153600000000 }   // 100 Years in milliseconds
+                                )
                                 .sendStatus(200)
                         }
                     }

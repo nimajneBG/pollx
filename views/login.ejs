@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<%= urlPrefix %>src/css/home.css">
+    
+    <!--Meta-->
+    <title>Login</title>
+    <meta name="description" content="Login to your pollx account">
+    <meta property="og:title" content="Login">
+    <meta property="og:description" content="Login to your pollx account">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pollx">
+    <% if (locals.url) { %>
+        <meta property="og:image" content="<%= url %>logo.svg">
+    <% } %>
+
+    <!-- Mainfest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+</head>
+
+<body>
+    <%- include('modules/header') %>
+
+    <main>
+        <div class="content">
+            <div>
+                <h1 class="pollx">Login</h1>
+                <% if (locals.message) { %>
+                    <%= message %>
+                <% } %>
+            </div>
+            <form action="/login" method="post">
+                <input type="text" name="user_name" id="in_username" placeholder="Username"><br>
+                <input type="password" name="password" id="in_password" placeholder="Password"><br>
+                <button type="submit">Login</button><br>
+            </form>
+        </div>
+
+    </main>
+
+    <%- include('modules/footer') %>
+</body>
+
+</html>
