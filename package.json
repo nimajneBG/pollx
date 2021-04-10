@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "start-watch": "nodemon index.js",
+    "dev": "nodemon index.js",
     "test": "jest --coverage",
     "build": "node-sass --output-style=compressed src/static/scss -o src/static/css",
     "build-watch": "node-sass --watch --output-style=compressed src/static/scss -o src/static/css"
