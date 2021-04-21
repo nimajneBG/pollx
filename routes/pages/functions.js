@@ -12,73 +12,71 @@ exports.home = (req, res) => {
     })
 }
 
-exports.poll = (req, res) => {
+exports.poll = async (req, res) => {
     if (isNaN(req.params.id))
         return res.status(400).render('error', {
             error: 'Invalid Id',
             urlPrefix: './../'
         })
 
-    db.execute(
-        'SELECT * FROM polls WHERE id = ?',
-        [req.params.id],
-        (err, result) => {
-            // Error handeling
-            if (err) {
-                logger.mysql(err.message)
-                res.status(500).render('error', {
-                    error: 'Something went wrong',
-                    urlPrefix: './../'
-                })
-            } else if (result.length > 0) {
-                result = result[0]
-                result.answers = JSON.parse(result.answers)
+    try {
+        let [result] = await db.execute(
+            'SELECT * FROM polls WHERE id = ?',
+            [req.params.id]
+        )
 
-                result.public = !!result.public
+        if (result.length > 0) {
+            result = result[0]
+            result.answers = JSON.parse(result.answers)
 
-                result.url = process.env.URL
+            result.public = !!result.public
 
-                result.urlPrefix = './../'
+            result.url = process.env.URL
 
-                res.render('poll', result)
-            } else {
-                res.status(404).render('error', {
-                    error: 'No poll with this id',
-                    urlPrefix: './../'
-                })
-            }
+            result.urlPrefix = './../'
+
+            res.render('poll', result)
+        } else {
+            res.status(404).render('error', {
+                error: 'No poll with this id',
+                urlPrefix: './../'
+            })
         }
-    )
+    } catch(err) {
+        logger.mysql(err.message)
+        res.status(500).render('error', {
+            error: 'Something went wrong',
+            urlPrefix: './../'
+        })
+    }
 }
 
-exports.createPoll = (req, res) => {
+exports.createPoll = async (req, res) => {
     res.render('create-poll')
 }
 
-exports.search = (req, res) => {
+exports.search = async (req, res) => {
     if ( req.query.q ) {
         const q = `%${req.query.q}%`
-        db.execute(
-            'SELECT title, description, id FROM polls WHERE ((title LIKE ?) OR (description LIKE ?)) AND public=1',
-            [ q, q ],
-            (err, result) => {
-                if ( err ) {
-                    logger.mysql(err.message)
-                    res.status(500).render('error', {
-                        error: 'Something went wrong',
-                        urlPrefix: ''
-                    })
-                } else {
-                    console.log(result)
-                    res.render('search', {
-                        url: process.env.URL,
-                        urlPrefix: '',
-                        title: 'Test',
-                        result
-                    })
-                }
-            }
-        )
+
+        try {
+            const result = await db.execute(
+                'SELECT title, description, id FROM polls WHERE ((title LIKE ?) OR (description LIKE ?)) AND public=1',
+                [ q, q ]
+            )
+            res.render('search', {
+                url: process.env.URL,
+                urlPrefix: '',
+                title: 'Test',
+                result
+            })
+        } catch(err) {
+            logger.mysql(err.message)
+            res.status(500).render('error', {
+                error: 'Something went wrong',
+                urlPrefix: ''
+            })
+        }
     } else {
         res.render('search', {
             url: process.env.URL,
@@ -93,7 +91,7 @@ exports.loginGet = (req, res) => {
     res.render('login', { urlPrefix: '/', url: process.env.URL })
 }
 
-exports.loginPost = (req, res) => {
+exports.loginPost = async (req, res) => {
     console.log(req.session)
 
     const { user_name, password } = req.body
@@ -114,17 +112,11 @@ exports.loginPost = (req, res) => {
             .render('login', { urlPrefix: '/', url: process.env.URL })
     }
 
-    db.execute('SELECT id, password FROM users WHERE name=?', [user_name], async (err, result) => {
-        if (err) {
-            logger.mysql(err.message)
-            return res
-                .status(500)
-                .render('error', {
-                    urlPrefix: '/',
-                    url: process.env.URL, 
-                    error: err.message
-                })
-        }
+    try {
+        const [result] = await db.execute(
+            'SELECT id, password FROM users WHERE name=?', 
+            [user_name]
+        )
 
         console.log(result)
 
@@ -150,7 +142,16 @@ exports.loginPost = (req, res) => {
                 url: process.env.URL, 
                 message: 'Incorrect password'
             })
-    })
+    } catch(err) {
+        logger.mysql(err.message)
+        res
+            .status(500)
+            .render('error', {
+                urlPrefix: '/',
+                url: process.env.URL, 
+                error: err.message
+            })
+    }
 }
 
 exports.registerGet = (req, res) => {
@@ -158,7 +159,7 @@ exports.registerGet = (req, res) => {
     res.render('register', { urlPrefix: '/', url: process.env.URL })
 }
 
-exports.registerPost = (req, res) => {
+exports.registerPost = async(req, res) => {
     console.log(req.session)
     const { user_name, email, password, password_repeat } = req.body
 
@@ -192,18 +193,14 @@ exports.registerPost = (req, res) => {
             .render('register', { urlPrefix: '/', url: process.env.URL })
     }
 
-    // Check whether the email is already in use
-    db.execute('SELECT * FROM users WHERE email=?', [email], async (err, result) => {
-        if (err) {
-            logger.mysql(err.message)
-            return res
-                .status(500)
-                .render('error', {
-                    urlPrefix: '/', 
-                    url: process.env.URL, 
-                    error: err.message
-                })
-        }
+    const conn = await db.getConnection()
+
+    try {
+        // Check whether the email is already in use
+        const [result] = await conn.execute(
+            'SELECT * FROM users WHERE email=?',
+            [email]
+        )
 
         if (result.length) {
             return res
@@ -219,28 +216,27 @@ exports.registerPost = (req, res) => {
         const hash = await bcrypt.hash(password, process.env.SALT_ROUNDS || 10)
 
         // Create user in the database
-        db.execute(
+        const [result2] = await conn.execute(
             'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [user_name, email, hash],
-            (err2, result2) => {
-                if (err2) {
-                    logger.mysql(err2.message)
-                    return res
-                        .status(500)
-                        .render('error', {
-                            urlPrefix: '/', 
-                            url: process.env.URL, 
-                            error: err2.message
-                        })
-                }
-
-                // Login
-                req.session.userID = result2.insertId
-
-                res.redirect('/dashboard')
-            }
+            [user_name, email, hash]
         )
-    })
+        
+        // Login
+        req.session.userID = result2.insertId
+
+        res.redirect('/dashboard')
+    } catch(err) {
+        logger.mysql(err.message)
+        res
+            .status(500)
+            .render('error', {
+                urlPrefix: '/', 
+                url: process.env.URL, 
+                error: err.message
+            })
+    }
+
+    await conn.release()
 }
 
 exports.logout = (req, res) => {
