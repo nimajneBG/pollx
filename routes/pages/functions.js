@@ -86,157 +86,159 @@ exports.search = async (req, res) => {
     }
 }
 
-exports.loginGet = (req, res) => {
-    console.log(req.session)
-    res.render('login', { urlPrefix: '/', url: process.env.URL })
-}
+exports.login = {
 
-exports.loginPost = async (req, res) => {
-    console.log(req.session)
+    get: (req, res) => {
+        res.render('login', { urlPrefix: '/', url: process.env.URL })
+    },
 
-    const { user_name, password } = req.body
-
-    if ( user_name == undefined || password == undefined ) {
-        return res
-            .status(400)
-            .render('login', {
-                urlPrefix: '/', 
-                url: process.env.URL, 
-                message: 'You need to input a password and username' 
-            })
-    }
-
-    if ( typeof user_name !== 'string' || typeof password !== 'string' ) {
-        return res
-            .status(400)
-            .render('login', { urlPrefix: '/', url: process.env.URL })
-    }
-
-    try {
-        const [result] = await db.execute(
-            'SELECT id, password FROM users WHERE name=?', 
-            [user_name]
-        )
-
-        console.log(result)
-
-        if (!result.length) {
+    post: async (req, res) => {
+    
+        const { user_name, password } = req.body
+    
+        if ( user_name == undefined || password == undefined ) {
             return res
+                .status(400)
+                .render('login', {
+                    urlPrefix: '/', 
+                    url: process.env.URL, 
+                    message: 'You need to input a password and username' 
+                })
+        }
+    
+        if ( typeof user_name !== 'string' || typeof password !== 'string' ) {
+            return res
+                .status(400)
+                .render('login', { urlPrefix: '/', url: process.env.URL })
+        }
+    
+        try {
+            const [result] = await db.execute(
+                'SELECT id, password FROM users WHERE name=?', 
+                [user_name]
+            )
+    
+            if (!result.length) {
+                return res
+                    .status(400)
+                    .render('login', { 
+                        urlPrefix: '/', 
+                        url: process.env.URL, 
+                        message: 'No user with this name' 
+                    })
+            }
+            
+            if (await bcrypt.compare(password, result[0].password)) {
+                req.session.userID = result[0].id
+                return res.redirect('/dashboard')
+            }
+            
+            res
                 .status(400)
                 .render('login', { 
                     urlPrefix: '/', 
                     url: process.env.URL, 
-                    message: 'No user with this name' 
+                    message: 'Incorrect password'
+                })
+        } catch(err) {
+            logger.mysql(err.message)
+            res
+                .status(500)
+                .render('error', {
+                    urlPrefix: '/',
+                    url: process.env.URL, 
+                    error: err.message
                 })
         }
-        
-        if (await bcrypt.compare(password, result[0].password)) {
-            req.session.userID = result[0].id
-            return res.redirect('/dashboard')
-        }
-        
-        res
-            .status(400)
-            .render('login', { 
-                urlPrefix: '/', 
-                url: process.env.URL, 
-                message: 'Incorrect password'
-            })
-    } catch(err) {
-        logger.mysql(err.message)
-        res
-            .status(500)
-            .render('error', {
-                urlPrefix: '/',
-                url: process.env.URL, 
-                error: err.message
-            })
     }
 }
 
-exports.registerGet = (req, res) => {
-    console.log(req.session)
-    res.render('register', { urlPrefix: '/', url: process.env.URL })
-}
+exports.register = {
 
-exports.registerPost = async(req, res) => {
-    console.log(req.session)
-    const { user_name, email, password, password_repeat } = req.body
+    get: (req, res) => {
+        res.render('register', { urlPrefix: '/', url: process.env.URL })
+    },
 
-    console.log(req.body)
-
-    // Check whether all params exist
-    if (!user_name || !email, !password, !password_repeat) {
-        console.log('Sind da')
-        return res
-            .status(400)
-            .render('register', { urlPrefix: '/', url: process.env.URL })
-    }
-
-    // Check whether they are of the right type
-    if (
-        typeof user_name !== 'string' || 
-        typeof email !== 'string' || 
-        typeof password !== 'string' || 
-        typeof password_repeat !== 'string'
-    ) {
-        console.log('typeof')
-        return res
-            .status(400)
-            .render('register', { urlPrefix: '/', url: process.env.URL })
-    }
-
-    // Check whether the email is valid, the passwords are the same and long enough
-    if (!isValidEmail(email) || password.length < 6 || password !== password_repeat) {
-        return res
-            .status(400)
-            .render('register', { urlPrefix: '/', url: process.env.URL })
-    }
-
-    const conn = await db.getConnection()
-
-    try {
-        // Check whether the email is already in use
-        const [result] = await conn.execute(
-            'SELECT * FROM users WHERE email=?',
-            [email]
-        )
-
-        if (result.length) {
+    post: async(req, res) => {
+        const { user_name, email, password, password_repeat } = req.body
+    
+        // Check whether all params exist
+        if (!user_name || !email, !password, !password_repeat) {
             return res
                 .status(400)
-                .render('register', {
+                .render('register', { urlPrefix: '/', url: process.env.URL })
+        }
+    
+        // Check whether they are of the right type
+        if (
+            typeof user_name !== 'string' || 
+            typeof email !== 'string' || 
+            typeof password !== 'string' || 
+            typeof password_repeat !== 'string'
+        ) {
+            return res
+                .status(400)
+                .render('register', { urlPrefix: '/', url: process.env.URL })
+        }
+    
+        // Check whether the email is valid, the passwords are the same and long enough
+        if (
+            !isValidEmail(email) || 
+            password.length < 6 || 
+            password !== password_repeat
+        ) {
+            return res
+                .status(400)
+                .render('register', { urlPrefix: '/', url: process.env.URL })
+        }
+    
+        const conn = await db.getConnection()
+    
+        try {
+            // Check whether the email is already in use
+            const [result] = await conn.execute(
+                'SELECT * FROM users WHERE email=?',
+                [email]
+            )
+    
+            if (result.length) {
+                return res
+                    .status(400)
+                    .render('register', {
+                        urlPrefix: '/', 
+                        url: process.env.URL, 
+                        message:  'This Email is already in use'
+                    })
+            }
+    
+            // Hash the password
+            const hash = await bcrypt.hash(
+                password, process.env.SALT_ROUNDS || 10
+            )
+    
+            // Create user in the database
+            const [result2] = await conn.execute(
+                'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+                [user_name, email, hash]
+            )
+            
+            // Login
+            req.session.userID = result2.insertId
+    
+            res.redirect('/dashboard')
+        } catch(err) {
+            logger.mysql(err.message)
+            res
+                .status(500)
+                .render('error', {
                     urlPrefix: '/', 
                     url: process.env.URL, 
-                    message:  'This Email is already in use'
+                    error: err.message
                 })
         }
-
-        // Hash the password
-        const hash = await bcrypt.hash(password, process.env.SALT_ROUNDS || 10)
-
-        // Create user in the database
-        const [result2] = await conn.execute(
-            'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-            [user_name, email, hash]
-        )
-        
-        // Login
-        req.session.userID = result2.insertId
-
-        res.redirect('/dashboard')
-    } catch(err) {
-        logger.mysql(err.message)
-        res
-            .status(500)
-            .render('error', {
-                urlPrefix: '/', 
-                url: process.env.URL, 
-                error: err.message
-            })
+    
+        await conn.release()
     }
-
-    await conn.release()
 }
 
 exports.logout = (req, res) => {

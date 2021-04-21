@@ -19,13 +19,13 @@ router.get('/search', pages.search)
 
 // GET & POST Login
 router.route('/login')
-    .get(auth.redirectDashboard, pages.loginGet)
-    .post(auth.redirectDashboard, pages.loginPost)
+    .get(auth.redirectDashboard, pages.login.get)
+    .post(auth.redirectDashboard, pages.login.post)
 
 // GET & POST Register
 router.route('/register')
-    .get(auth.redirectDashboard, pages.registerGet)
-    .post(auth.redirectDashboard, pages.registerPost)
+    .get(auth.redirectDashboard, pages.register.get)
+    .post(auth.redirectDashboard, pages.register.post)
 
 // GET Logout
 router.get('/logout', auth.redirectLogin, pages.logout)
