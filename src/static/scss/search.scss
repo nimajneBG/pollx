@@ -1,0 +1,24 @@
+@import 'base';
+
+#search-form {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#q {
+    flex-grow: 1;
+}
+
+i {
+    color: $fg !important;
+}
+
+.search-result-item {
+    display: block;
+    background-color: $fg;
+    text-decoration: none;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 4px;
+}

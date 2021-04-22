@@ -60,14 +60,15 @@ exports.search = async (req, res) => {
         const q = `%${req.query.q}%`
 
         try {
-            const result = await db.execute(
+            const [result] = await db.execute(
                 'SELECT title, description, id FROM polls WHERE ((title LIKE ?) OR (description LIKE ?)) AND public=1',
                 [ q, q ]
             )
+
             res.render('search', {
                 url: process.env.URL,
                 urlPrefix: '',
-                title: 'Test',
+                title: req.query.q,
                 result
             })
         } catch(err) {
@@ -80,8 +81,7 @@ exports.search = async (req, res) => {
     } else {
         res.render('search', {
             url: process.env.URL,
-            urlPrefix: '',
-            title: 'Test',
+            urlPrefix: ''
         })
     }
 }

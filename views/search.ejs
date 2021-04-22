@@ -7,10 +7,17 @@
     <link rel="stylesheet" href="<%= urlPrefix %>src/css/search.css">
     
     <!--Meta-->
-    <title>POLLX: Search for <%= title %></title>
-    <meta name="description" content="Results for <%= title %>">
-    <meta property="og:title" content="POLLX: Search for <%= title %>">
-    <meta property="og:description" content="Results for <%= title %>">
+    <% if (locals.title) { %> 
+        <title>POLLX: Search for <%= title %></title>
+        <meta name="description" content="Results for <%= title %>">
+        <meta property="og:title" content="POLLX: Search for <%= title %>">
+        <meta property="og:description" content="Results for <%= title %>">
+    <% } else { %> 
+        <title>POLLX: Search</title>
+        <meta name="description" content="Search for polls">
+        <meta property="og:title" content="POLLX: Search">
+        <meta property="og:description" content="Search for polls">
+    <% } %> 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Pollx">
     <% if (locals.url) { %>
@@ -33,8 +40,25 @@
         <div class="content">
             <div>
                 <h1 class="pollx">Search:</h1>
-                <input type="text">
+                <form action="/search" method="get" id="search-form">
+                    <% if (locals.title) { %> 
+                        <input type="text" name="q" id="q" placeholder="Find poll" value="<%= title %>">
+                    <% } else { %> 
+                        <input type="text" name="q" id="q" placeholder="Find poll" value="">
+                    <% } %>
+                    <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
+                </form>
             </div>
+            <% if (locals.result) { %>
+                <div class="search-results">
+                    <% result.forEach(resultItem => { %> 
+                        <a href="/poll/<%= resultItem.id %>" class="search-result-item">
+                            <p class="search-ressult-item-heading pollx"><%= resultItem.title %></p>
+                            <p class="search-ressult-item-description"><%= resultItem.description %></p>
+                        </a>
+                    <% }) %> 
+                </div>
+            <% } %>
         </div>
 
     </main>
