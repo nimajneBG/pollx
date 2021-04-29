@@ -6,7 +6,6 @@ const path = require('path')
 
 const loggerMiddleware = require('./middleware/logger')
 const authMiddleware = require('./middleware/auth')
-const getUrlPrefix = require('./shared/functions/getUrlPrefix')
 
 // Init dotenv
 require('dotenv').config()
@@ -67,8 +66,7 @@ app.use('/api', api)
 // Custom 404 and 500 error pages
 app.use((req, res) => {
     res.status(404).render('error', { 
-        error: '404 Not found', 
-        urlPrefix: getUrlPrefix(req.originalUrl) 
+        error: '404 Not found'
     })
 })
 

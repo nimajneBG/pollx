@@ -7,16 +7,14 @@ const logger = require('./../../shared/logger')
 
 exports.home = (req, res) => {
     res.render('index', {
-        url: process.env.URL,
-        urlPrefix: ''
+        url: process.env.URL
     })
 }
 
 exports.poll = async (req, res) => {
     if (isNaN(req.params.id))
         return res.status(400).render('error', {
-            error: 'Invalid Id',
-            urlPrefix: './../'
+            error: 'Invalid Id'
         })
 
     try {
@@ -33,20 +31,16 @@ exports.poll = async (req, res) => {
 
             result.url = process.env.URL
 
-            result.urlPrefix = './../'
-
             res.render('poll', result)
         } else {
             res.status(404).render('error', {
-                error: 'No poll with this id',
-                urlPrefix: './../'
+                error: 'No poll with this id'
             })
         }
     } catch(err) {
         logger.mysql(err.message)
         res.status(500).render('error', {
-            error: 'Something went wrong',
-            urlPrefix: './../'
+            error: 'Something went wrong'
         })
     }
 }
@@ -67,21 +61,18 @@ exports.search = async (req, res) => {
 
             res.render('search', {
                 url: process.env.URL,
-                urlPrefix: '',
                 title: req.query.q,
                 result
             })
         } catch(err) {
             logger.mysql(err.message)
             res.status(500).render('error', {
-                error: 'Something went wrong',
-                urlPrefix: ''
+                error: 'Something went wrong'
             })
         }
     } else {
         res.render('search', {
-            url: process.env.URL,
-            urlPrefix: ''
+            url: process.env.URL
         })
     }
 }
@@ -89,7 +80,7 @@ exports.search = async (req, res) => {
 exports.login = {
 
     get: (req, res) => {
-        res.render('login', { urlPrefix: '/', url: process.env.URL })
+        res.render('login', { url: process.env.URL })
     },
 
     post: async (req, res) => {
@@ -100,7 +91,6 @@ exports.login = {
             return res
                 .status(400)
                 .render('login', {
-                    urlPrefix: '/', 
                     url: process.env.URL, 
                     message: 'You need to input a password and username' 
                 })
@@ -109,7 +99,7 @@ exports.login = {
         if ( typeof user_name !== 'string' || typeof password !== 'string' ) {
             return res
                 .status(400)
-                .render('login', { urlPrefix: '/', url: process.env.URL })
+                .render('login', { url: process.env.URL })
         }
     
         try {
@@ -121,8 +111,7 @@ exports.login = {
             if (!result.length) {
                 return res
                     .status(400)
-                    .render('login', { 
-                        urlPrefix: '/', 
+                    .render('login', {
                         url: process.env.URL, 
                         message: 'No user with this name' 
                     })
@@ -135,8 +124,7 @@ exports.login = {
             
             res
                 .status(400)
-                .render('login', { 
-                    urlPrefix: '/', 
+                .render('login', {
                     url: process.env.URL, 
                     message: 'Incorrect password'
                 })
@@ -145,7 +133,6 @@ exports.login = {
             res
                 .status(500)
                 .render('error', {
-                    urlPrefix: '/',
                     url: process.env.URL, 
                     error: err.message
                 })
@@ -156,7 +143,7 @@ exports.login = {
 exports.register = {
 
     get: (req, res) => {
-        res.render('register', { urlPrefix: '/', url: process.env.URL })
+        res.render('register', { url: process.env.URL })
     },
 
     post: async(req, res) => {
@@ -166,7 +153,7 @@ exports.register = {
         if (!user_name || !email, !password, !password_repeat) {
             return res
                 .status(400)
-                .render('register', { urlPrefix: '/', url: process.env.URL })
+                .render('register', { url: process.env.URL })
         }
     
         // Check whether they are of the right type
@@ -178,7 +165,7 @@ exports.register = {
         ) {
             return res
                 .status(400)
-                .render('register', { urlPrefix: '/', url: process.env.URL })
+                .render('register', { url: process.env.URL })
         }
     
         // Check whether the email is valid, the passwords are the same and long enough
@@ -189,7 +176,7 @@ exports.register = {
         ) {
             return res
                 .status(400)
-                .render('register', { urlPrefix: '/', url: process.env.URL })
+                .render('register', { url: process.env.URL })
         }
     
         const conn = await db.getConnection()
@@ -205,7 +192,6 @@ exports.register = {
                 return res
                     .status(400)
                     .render('register', {
-                        urlPrefix: '/', 
                         url: process.env.URL, 
                         message:  'This Email is already in use'
                     })
@@ -231,7 +217,6 @@ exports.register = {
             res
                 .status(500)
                 .render('error', {
-                    urlPrefix: '/', 
                     url: process.env.URL, 
                     error: err.message
                 })
@@ -247,5 +232,5 @@ exports.logout = (req, res) => {
 }
 
 exports.dashboard = (req, res) => {
-    res.render('dashboard', { urlPrefix: '/', url: process.env.URL })
+    res.render('dashboard', { url: process.env.URL })
 }

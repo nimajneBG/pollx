@@ -1,5 +1,5 @@
 async function displayRandomPolls () {
-    const url = `${urlPrefix}api/random`
+    const url = '/api/random'
 
     let data;
 

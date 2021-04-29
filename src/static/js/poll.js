@@ -52,13 +52,13 @@ class Poll {
     }
 
     async getResults() {
-        const url = `../../api/results/${id}`
+        const url = `/api/results/${id}`
 
         await fetch(url).then(res => res.json()).then(data => this.results = data).catch(err => console.error(err))
     }
 
     vote() {
-        const url = `../../api/vote/${id}`
+        const url = `/api/vote/${id}`
 
         const selectedID = this.findSelectedOption()
 
