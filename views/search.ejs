@@ -51,12 +51,16 @@
             </div>
             <% if (locals.result) { %>
                 <div class="search-results">
-                    <% result.forEach(resultItem => { %> 
-                        <a href="/poll/<%= resultItem.id %>" class="search-result-item">
-                            <p class="search-ressult-item-heading pollx"><%= resultItem.title %></p>
-                            <p class="search-ressult-item-description"><%= resultItem.description %></p>
-                        </a>
-                    <% }) %> 
+                    <% if (result.length) { %> 
+                        <% result.forEach(resultItem => { %> 
+                            <a href="/poll/<%= resultItem.id %>" class="search-result-item">
+                                <p class="search-ressult-item-heading pollx"><%= resultItem.title %></p>
+                                <p class="search-ressult-item-description"><%= resultItem.description %></p>
+                            </a>
+                        <% }) %> 
+                    <% } else { %>
+                        <p>No results found</p>
+                    <% } %> 
                 </div>
             <% } %>
         </div>

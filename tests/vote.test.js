@@ -1,4 +1,4 @@
-/* 
+/*
     Unit Test for the vote function in the api
 
     1 Checks Vote that should work

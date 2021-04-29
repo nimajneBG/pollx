@@ -30,11 +30,11 @@
   - [ ] Pie chart
 - [ ] Create poll page
 - [x] Voting
-- [ ] Switch to SASS/SCSS
+- [x] Switch to SASS/SCSS
 - [ ] Dashboards
   - [ ] Admin
   - [ ] User
 - [x] Use Open Graph meta tags
 - [x] Display "recommended"/random polls
-- [ ] Searchbar
+- [x] Searchbar
 - [ ] Share button for polls

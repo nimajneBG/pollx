@@ -14,8 +14,16 @@
 
     <div class="placeholder"></div>
 
-    <div>
-        <input type="text" placeholder="Find poll">
-        <a href="/create-poll" class="button">Create new Poll</a>
+    <label for="open-dropdown" class="button" id="open-dropdown-label">
+        <i class="fas fa-bars"></i>
+    </label>
+    <input type="checkbox" name="open-dropdown" id="open-dropdown">
+
+    <div class="nav-dropdown">
+        <form action="/search" method="get" id="search-form-nav">
+            <input type="text" name="q" placeholder="Find poll">
+            <button type="submit" id="search-button"><i class="fas fa-search"></i></button>
+        </form>
+        <a href="/login" class="button">Login</a>
     </div>
 </header>
